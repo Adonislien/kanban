@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>老大的看板 | Kanban Board</title>
+  <title>老大的看板 | Professional Kanban</title>
+  <meta name="description" content="可回流式 Kanban 工作流程管理系統">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -12,44 +14,67 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0d1b2a 100%);
       min-height: 100vh;
       color: #fff;
     }
 
+    /* Header */
     .header {
-      padding: 24px 32px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     .header h1 {
-      font-size: 24px;
-      font-weight: 600;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
+    .project-selector {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
     .header-actions {
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
 
     .btn {
-      padding: 10px 20px;
+      padding: 8px 16px;
       border: none;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .btn-primary {
@@ -58,86 +83,116 @@
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
     }
 
+    .btn-icon {
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.7);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    /* Board */
     .board {
       display: flex;
-      gap: 20px;
-      padding: 24px 32px;
+      gap: 16px;
+      padding: 20px 24px;
       overflow-x: auto;
-      min-height: calc(100vh - 85px);
+      min-height: calc(100vh - 65px);
     }
 
     .column {
-      min-width: 320px;
-      max-width: 320px;
-      background: rgba(255, 255, 255, 0.08);
+      min-width: 280px;
+      max-width: 280px;
+      background: rgba(255, 255, 255, 0.04);
       backdrop-filter: blur(10px);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       flex-direction: column;
-      max-height: calc(100vh - 130px);
+      max-height: calc(100vh - 100px);
     }
 
     .column-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .column-title-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 4px;
     }
 
     .column-title {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
     }
 
     .card-count {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .column-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
     }
 
     .column-content {
-      padding: 12px;
+      padding: 10px;
       flex: 1;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .column-content.drag-over {
       background: rgba(102, 126, 234, 0.1);
+      border-radius: 8px;
     }
 
+    /* Cards */
     .card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 14px;
       cursor: grab;
       transition: all 0.2s ease;
-      border-left: 4px solid var(--card-color, #667eea);
+      border-left: 3px solid var(--card-color, #667eea);
+      position: relative;
     }
 
     .card:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .card.dragging {
@@ -145,68 +200,149 @@
       cursor: grabbing;
     }
 
+    .card-project {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
     .card-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       margin-bottom: 8px;
+      line-height: 1.4;
     }
 
     .card-description {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.6);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
       line-height: 1.5;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .card-tag {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .priority-high {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+    }
+
+    .priority-medium {
+      background: rgba(249, 115, 22, 0.2);
+      color: #fdba74;
+    }
+
+    .priority-low {
+      background: rgba(34, 197, 94, 0.2);
+      color: #86efac;
+    }
+
+    .card-dates {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.4);
+      display: flex;
+      gap: 12px;
     }
 
     .card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .card-date {
+    .card-assignee {
       font-size: 11px;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .card-actions {
       display: flex;
-      gap: 8px;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .card:hover .card-actions {
+      opacity: 1;
     }
 
     .card-action-btn {
-      background: none;
+      background: rgba(255, 255, 255, 0.1);
       border: none;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.6);
       cursor: pointer;
-      font-size: 14px;
-      padding: 4px;
+      font-size: 12px;
+      padding: 4px 6px;
       border-radius: 4px;
       transition: all 0.2s;
     }
 
     .card-action-btn:hover {
       color: #fff;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Review Badge */
+    .review-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .review-pass {
+      background: rgba(34, 197, 94, 0.2);
+      color: #86efac;
+    }
+
+    .review-return {
+      background: rgba(249, 115, 22, 0.2);
+      color: #fdba74;
     }
 
     .add-card-btn {
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px dashed rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      color: rgba(255, 255, 255, 0.5);
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.4);
       cursor: pointer;
       transition: all 0.2s;
-      font-size: 14px;
+      font-size: 12px;
+      text-align: center;
     }
 
     .add-card-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.3);
-      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: rgba(255, 255, 255, 0.8);
     }
 
     /* Modal */
@@ -217,11 +353,13 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
+      padding: 40px 20px;
       z-index: 1000;
+      overflow-y: auto;
     }
 
     .modal-overlay.active {
@@ -230,44 +368,75 @@
 
     .modal {
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border-radius: 20px;
-      padding: 32px;
-      width: 90%;
-      max-width: 480px;
+      border-radius: 16px;
+      padding: 28px;
+      width: 100%;
+      max-width: 520px;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
     }
 
     .modal h2 {
-      font-size: 20px;
-      margin-bottom: 24px;
+      font-size: 18px;
+      font-weight: 600;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
+    .modal-close {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
     }
 
     .form-group label {
       display: block;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 8px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 6px;
+      font-weight: 500;
     }
 
     .form-group input,
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 12px 16px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 10px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
       color: #fff;
-      font-size: 14px;
+      font-size: 13px;
       transition: all 0.2s;
     }
 
@@ -276,24 +445,32 @@
     .form-group select:focus {
       outline: none;
       border-color: #667eea;
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .form-group textarea {
-      min-height: 100px;
+      min-height: 80px;
       resize: vertical;
+    }
+
+    .form-group select {
+      cursor: pointer;
+    }
+
+    .form-group select option {
+      background: #1a1a2e;
     }
 
     .color-picker {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .color-option {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
       cursor: pointer;
       border: 2px solid transparent;
       transition: all 0.2s;
@@ -301,65 +478,294 @@
 
     .color-option:hover,
     .color-option.selected {
-      transform: scale(1.1);
-      border-color: #fff;
+      transform: scale(1.15);
+      border-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .form-section {
+      padding-top: 18px;
+      margin-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .form-section-title {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
     }
 
     .modal-actions {
       display: flex;
       gap: 12px;
       justify-content: flex-end;
-      margin-top: 28px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
+    /* Review Modal */
+    .review-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .review-option {
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .review-option:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .review-option.selected {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.15);
+    }
+
+    .review-option-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .review-option-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .review-option-desc {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Toast */
     .status-toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: white;
-      padding: 14px 24px;
-      border-radius: 12px;
-      font-size: 14px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 13px;
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.3s ease;
       box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+      z-index: 2000;
     }
 
     .status-toast.show {
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Help Panel */
+    .help-panel {
+      display: none;
+      position: fixed;
+      top: 65px;
+      right: 0;
+      width: 320px;
+      height: calc(100vh - 65px);
+      background: rgba(15, 15, 35, 0.98);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 50;
+    }
+
+    .help-panel.active {
+      display: block;
+    }
+
+    .help-panel h3 {
+      font-size: 14px;
+      margin-bottom: 16px;
+      color: #667eea;
+    }
+
+    .help-section {
+      margin-bottom: 20px;
+    }
+
+    .help-section h4 {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 8px;
+    }
+
+    .help-section p {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.6;
+    }
+
+    .flow-diagram {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px;
+      border-radius: 8px;
+      font-family: monospace;
+      line-height: 1.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .board {
+        padding: 16px;
+      }
+
+      .column {
+        min-width: 260px;
+        max-width: 260px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .help-panel {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>📋 老大的看板</h1>
+    <div class="header-left">
+      <h1>📋 老大的看板</h1>
+      <select class="project-selector" id="projectFilter" onchange="filterByProject()">
+        <option value="">所有專案</option>
+      </select>
+    </div>
     <div class="header-actions">
+      <button class="btn-icon" onclick="toggleHelp()" title="流程說明">❓</button>
       <button class="btn btn-secondary" onclick="exportData()">📥 匯出</button>
       <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 匯入</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
-      <button class="btn btn-primary" onclick="addColumn()">➕ 新增欄位</button>
+      <button class="btn btn-primary" onclick="openCardModal('backlog')">➕ 新增任務</button>
     </div>
   </div>
 
   <div class="board" id="board"></div>
 
-  <!-- Add/Edit Card Modal -->
+  <!-- Help Panel -->
+  <div class="help-panel" id="helpPanel">
+    <h3>📖 Kanban 流程說明</h3>
+    
+    <div class="help-section">
+      <h4>流程順序</h4>
+      <div class="flow-diagram">
+Backlog → To Do → Pending → Ongoing → Review → Done
+        ↑                                    ↓
+        ←───── 方向錯誤 / 大改 ──────────────┘
+                    ↓
+              To Do ← 重排時間
+                    ↓
+              Ongoing ← 小修
+      </div>
+    </div>
+
+    <div class="help-section">
+      <h4>📦 Backlog</h4>
+      <p>需求池/想法池。收集所有尚未確認的任務、新想法。Review 後發現方向錯誤的任務會退回這裡。</p>
+    </div>
+
+    <div class="help-section">
+      <h4>📋 To Do</h4>
+      <p>已確認可執行的任務，條件與需求已明確，可立即開工。</p>
+    </div>
+
+    <div class="help-section">
+      <h4>⏸️ Pending</h4>
+      <p>等待外部條件：等資料、等回覆、等系統/API/客戶。避免任務卡在 Ongoing 造成壓力。</p>
+    </div>
+
+    <div class="help-section">
+      <h4>🔄 Ongoing</h4>
+      <p>正在執行的任務。控制數量，專注優先！不適合放等待或未釐清的任務。</p>
+    </div>
+
+    <div class="help-section">
+      <h4>🔍 Review</h4>
+      <p>驗收階段。可退回至：<br>
+      • Done（通過）<br>
+      • Ongoing（小修）<br>
+      • To Do（重排）<br>
+      • Backlog（方向錯誤）</p>
+    </div>
+
+    <div class="help-section">
+      <h4>✅ Done</h4>
+      <p>任務完成，可交付。</p>
+    </div>
+  </div>
+
+  <!-- Card Modal -->
   <div class="modal-overlay" id="cardModal">
     <div class="modal">
-      <h2 id="modalTitle">新增任務</h2>
+      <div class="modal-header">
+        <h2 id="modalTitle">新增任務</h2>
+        <button class="modal-close" onclick="closeCardModal()">✕</button>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>專案名稱</label>
+          <input type="text" id="cardProject" placeholder="例：網站改版" list="projectList">
+          <datalist id="projectList"></datalist>
+        </div>
+        <div class="form-group">
+          <label>負責人</label>
+          <input type="text" id="cardAssignee" placeholder="例：老大">
+        </div>
+      </div>
+
       <div class="form-group">
-        <label>任務標題</label>
+        <label>任務標題 *</label>
         <input type="text" id="cardTitle" placeholder="輸入任務標題...">
       </div>
+
       <div class="form-group">
         <label>描述（選填）</label>
-        <textarea id="cardDescription" placeholder="輸入任務描述..."></textarea>
+        <textarea id="cardDescription" placeholder="任務詳細描述..."></textarea>
       </div>
-      <div class="form-group">
-        <label>顏色標籤</label>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>優先順序</label>
+          <select id="cardPriority">
+            <option value="low">🟢 Low</option>
+            <option value="medium" selected>🟡 Medium</option>
+            <option value="high">🔴 High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>預計完成日</label>
+          <input type="date" id="cardDueDate">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">顏色標籤</div>
         <div class="color-picker" id="colorPicker">
           <div class="color-option" style="background: #6366f1" data-color="#6366f1"></div>
           <div class="color-option" style="background: #8b5cf6" data-color="#8b5cf6"></div>
@@ -369,11 +775,61 @@
           <div class="color-option" style="background: #eab308" data-color="#eab308"></div>
           <div class="color-option" style="background: #22c55e" data-color="#22c55e"></div>
           <div class="color-option" style="background: #14b8a6" data-color="#14b8a6"></div>
+          <div class="color-option" style="background: #0ea5e9" data-color="#0ea5e9"></div>
+          <div class="color-option" style="background: #64748b" data-color="#64748b"></div>
         </div>
       </div>
+
       <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+        <button class="btn btn-secondary" onclick="closeCardModal()">取消</button>
         <button class="btn btn-primary" onclick="saveCard()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review Modal -->
+  <div class="modal-overlay" id="reviewModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>🔍 Review 驗收</h2>
+        <button class="modal-close" onclick="closeReviewModal()">✕</button>
+      </div>
+
+      <p style="font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 20px;">
+        選擇驗收結果，決定任務下一步：
+      </p>
+
+      <div class="review-options">
+        <div class="review-option" data-target="done" onclick="selectReviewOption(this)">
+          <div class="review-option-icon">✅</div>
+          <div class="review-option-title">通過 → Done</div>
+          <div class="review-option-desc">任務完成，可交付</div>
+        </div>
+        <div class="review-option" data-target="ongoing" onclick="selectReviewOption(this)">
+          <div class="review-option-icon">🔧</div>
+          <div class="review-option-title">小修 → Ongoing</div>
+          <div class="review-option-desc">補資料、微調內容</div>
+        </div>
+        <div class="review-option" data-target="todo" onclick="selectReviewOption(this)">
+          <div class="review-option-icon">📅</div>
+          <div class="review-option-title">重排 → To Do</div>
+          <div class="review-option-desc">需重新排時間</div>
+        </div>
+        <div class="review-option" data-target="backlog" onclick="selectReviewOption(this)">
+          <div class="review-option-icon">🔄</div>
+          <div class="review-option-title">大改 → Backlog</div>
+          <div class="review-option-desc">方向錯誤、需重新定義</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Review 備註 / 退回原因</label>
+        <textarea id="reviewNotes" placeholder="說明驗收結果或退回原因..."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeReviewModal()">取消</button>
+        <button class="btn btn-primary" onclick="submitReview()">確認</button>
       </div>
     </div>
   </div>
@@ -381,33 +837,41 @@
   <div class="status-toast" id="toast">已儲存</div>
 
   <script>
+    // Data
     let boardData = {
       columns: [
-        { id: 'todo', title: '📋 待辦', cards: [] },
-        { id: 'doing', title: '🔄 進行中', cards: [] },
-        { id: 'done', title: '✅ 已完成', cards: [] }
+        { id: 'backlog', title: '📦 Backlog', description: '需求池 / 想法池', cards: [] },
+        { id: 'todo', title: '📋 To Do', description: '已確認可執行', cards: [] },
+        { id: 'pending', title: '⏸️ Pending', description: '等待中', cards: [] },
+        { id: 'ongoing', title: '🔄 Ongoing', description: '進行中', cards: [] },
+        { id: 'review', title: '🔍 Review', description: '驗收', cards: [] },
+        { id: 'done', title: '✅ Done', description: '已完成', cards: [] }
       ],
+      projects: [],
       lastUpdated: new Date().toISOString()
     };
 
     let currentColumn = null;
     let editingCard = null;
     let selectedColor = '#6366f1';
+    let reviewingCard = null;
+    let reviewSourceColumn = null;
+    let selectedReviewTarget = null;
+    let currentProjectFilter = '';
 
     // Load data
     async function loadData() {
       try {
-        const response = await fetch('data.json');
+        const response = await fetch('data.json?' + Date.now());
         if (response.ok) {
-          boardData = await response.json();
+          const data = await response.json();
+          if (data.columns) boardData = data;
         }
       } catch (e) {
-        // Use localStorage fallback
         const saved = localStorage.getItem('kanbanData');
-        if (saved) {
-          boardData = JSON.parse(saved);
-        }
+        if (saved) boardData = JSON.parse(saved);
       }
+      updateProjectList();
       render();
     }
 
@@ -415,16 +879,35 @@
     function saveData() {
       boardData.lastUpdated = new Date().toISOString();
       localStorage.setItem('kanbanData', JSON.stringify(boardData));
+      updateProjectList();
       showToast('已儲存 ✓');
-      
-      // Also save to file for Jisoo to read
-      downloadDataSilently();
     }
 
-    function downloadDataSilently() {
-      // Create a hidden anchor to trigger download
-      const dataStr = JSON.stringify(boardData, null, 2);
-      console.log('Kanban data updated:', dataStr);
+    // Update project list
+    function updateProjectList() {
+      const projects = new Set();
+      boardData.columns.forEach(col => {
+        col.cards.forEach(card => {
+          if (card.project) projects.add(card.project);
+        });
+      });
+      boardData.projects = Array.from(projects);
+
+      const datalist = document.getElementById('projectList');
+      const filter = document.getElementById('projectFilter');
+      
+      datalist.innerHTML = boardData.projects.map(p => `<option value="${p}">`).join('');
+      
+      const currentVal = filter.value;
+      filter.innerHTML = '<option value="">所有專案</option>' + 
+        boardData.projects.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+      filter.value = currentVal;
+    }
+
+    // Filter by project
+    function filterByProject() {
+      currentProjectFilter = document.getElementById('projectFilter').value;
+      render();
     }
 
     // Render board
@@ -433,38 +916,71 @@
       board.innerHTML = '';
 
       boardData.columns.forEach(column => {
+        const filteredCards = currentProjectFilter 
+          ? column.cards.filter(c => c.project === currentProjectFilter)
+          : column.cards;
+
         const colEl = document.createElement('div');
         colEl.className = 'column';
         colEl.innerHTML = `
           <div class="column-header">
-            <span class="column-title">${column.title}</span>
-            <span class="card-count">${column.cards.length}</span>
+            <div class="column-title-row">
+              <span class="column-title">${column.title}</span>
+              <span class="card-count">${filteredCards.length}</span>
+            </div>
+            <div class="column-desc">${column.description}</div>
           </div>
           <div class="column-content" data-column="${column.id}" 
                ondragover="handleDragOver(event)" 
                ondragleave="handleDragLeave(event)"
                ondrop="handleDrop(event, '${column.id}')">
-            ${column.cards.map(card => `
-              <div class="card" draggable="true" 
-                   ondragstart="handleDragStart(event, '${card.id}', '${column.id}')"
-                   ondragend="handleDragEnd(event)"
-                   style="--card-color: ${card.color || '#667eea'}">
-                <div class="card-title">${escapeHtml(card.title)}</div>
-                ${card.description ? `<div class="card-description">${escapeHtml(card.description)}</div>` : ''}
-                <div class="card-footer">
-                  <span class="card-date">${formatDate(card.createdAt)}</span>
-                  <div class="card-actions">
-                    <button class="card-action-btn" onclick="editCard('${column.id}', '${card.id}')">✏️</button>
-                    <button class="card-action-btn" onclick="deleteCard('${column.id}', '${card.id}')">🗑️</button>
-                  </div>
-                </div>
-              </div>
-            `).join('')}
-            <button class="add-card-btn" onclick="openModal('${column.id}')">+ 新增任務</button>
+            ${filteredCards.map(card => renderCard(card, column.id)).join('')}
+            <button class="add-card-btn" onclick="openCardModal('${column.id}')">+ 新增任務</button>
           </div>
         `;
         board.appendChild(colEl);
       });
+    }
+
+    function renderCard(card, columnId) {
+      const priorityClass = `priority-${card.priority || 'medium'}`;
+      const priorityLabel = { high: '🔴 High', medium: '🟡 Medium', low: '🟢 Low' }[card.priority || 'medium'];
+      
+      let reviewBadge = '';
+      if (card.reviewResult) {
+        const isPass = card.reviewResult === 'pass';
+        reviewBadge = `<span class="review-badge ${isPass ? 'review-pass' : 'review-return'}">${isPass ? '✓ 通過' : '↩ 退回'}</span>`;
+      }
+
+      const isReviewColumn = columnId === 'review';
+      const reviewBtn = isReviewColumn ? `<button class="card-action-btn" onclick="openReviewModal('${columnId}', '${card.id}')" title="驗收">🔍</button>` : '';
+
+      return `
+        <div class="card" draggable="true" 
+             ondragstart="handleDragStart(event, '${card.id}', '${columnId}')"
+             ondragend="handleDragEnd(event)"
+             style="--card-color: ${card.color || '#667eea'}">
+          ${reviewBadge}
+          ${card.project ? `<div class="card-project">${escapeHtml(card.project)}</div>` : ''}
+          <div class="card-title">${escapeHtml(card.title)}</div>
+          ${card.description ? `<div class="card-description">${escapeHtml(card.description)}</div>` : ''}
+          <div class="card-meta">
+            <span class="card-tag ${priorityClass}">${priorityLabel}</span>
+          </div>
+          <div class="card-dates">
+            <span>📅 ${formatDate(card.createdAt)}</span>
+            ${card.dueDate ? `<span>🎯 ${card.dueDate}</span>` : ''}
+          </div>
+          <div class="card-footer">
+            <span class="card-assignee">${card.assignee ? '👤 ' + escapeHtml(card.assignee) : ''}</span>
+            <div class="card-actions">
+              ${reviewBtn}
+              <button class="card-action-btn" onclick="editCard('${columnId}', '${card.id}')" title="編輯">✏️</button>
+              <button class="card-action-btn" onclick="deleteCard('${columnId}', '${card.id}')" title="刪除">🗑️</button>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     // Drag and Drop
@@ -494,14 +1010,18 @@
       e.preventDefault();
       e.currentTarget.classList.remove('drag-over');
 
-      if (!draggedCard || sourceColumn === targetColumnId) return;
+      if (!draggedCard) return;
 
-      // Find and remove card from source
       const srcCol = boardData.columns.find(c => c.id === sourceColumn);
       const cardIndex = srcCol.cards.findIndex(c => c.id === draggedCard);
       const [card] = srcCol.cards.splice(cardIndex, 1);
 
-      // Add to target
+      // Clear review result when moving
+      if (sourceColumn !== targetColumnId) {
+        card.reviewResult = null;
+        card.reviewNotes = null;
+      }
+
       const targetCol = boardData.columns.find(c => c.id === targetColumnId);
       targetCol.cards.push(card);
 
@@ -509,35 +1029,42 @@
       render();
     }
 
-    // Modal
-    function openModal(columnId, cardId = null) {
+    // Card Modal
+    function openCardModal(columnId, cardId = null) {
       currentColumn = columnId;
       editingCard = cardId;
 
       const modal = document.getElementById('cardModal');
-      const titleInput = document.getElementById('cardTitle');
-      const descInput = document.getElementById('cardDescription');
-
+      
       if (cardId) {
         document.getElementById('modalTitle').textContent = '編輯任務';
         const col = boardData.columns.find(c => c.id === columnId);
         const card = col.cards.find(c => c.id === cardId);
-        titleInput.value = card.title;
-        descInput.value = card.description || '';
+        
+        document.getElementById('cardProject').value = card.project || '';
+        document.getElementById('cardAssignee').value = card.assignee || '';
+        document.getElementById('cardTitle').value = card.title;
+        document.getElementById('cardDescription').value = card.description || '';
+        document.getElementById('cardPriority').value = card.priority || 'medium';
+        document.getElementById('cardDueDate').value = card.dueDate || '';
         selectedColor = card.color || '#6366f1';
       } else {
         document.getElementById('modalTitle').textContent = '新增任務';
-        titleInput.value = '';
-        descInput.value = '';
+        document.getElementById('cardProject').value = '';
+        document.getElementById('cardAssignee').value = '';
+        document.getElementById('cardTitle').value = '';
+        document.getElementById('cardDescription').value = '';
+        document.getElementById('cardPriority').value = 'medium';
+        document.getElementById('cardDueDate').value = '';
         selectedColor = '#6366f1';
       }
 
       updateColorSelection();
       modal.classList.add('active');
-      titleInput.focus();
+      document.getElementById('cardTitle').focus();
     }
 
-    function closeModal() {
+    function closeCardModal() {
       document.getElementById('cardModal').classList.remove('active');
       currentColumn = null;
       editingCard = null;
@@ -545,37 +1072,41 @@
 
     function saveCard() {
       const title = document.getElementById('cardTitle').value.trim();
-      const description = document.getElementById('cardDescription').value.trim();
-
       if (!title) {
         alert('請輸入任務標題');
         return;
       }
 
+      const cardData = {
+        project: document.getElementById('cardProject').value.trim(),
+        assignee: document.getElementById('cardAssignee').value.trim(),
+        title,
+        description: document.getElementById('cardDescription').value.trim(),
+        priority: document.getElementById('cardPriority').value,
+        dueDate: document.getElementById('cardDueDate').value,
+        color: selectedColor
+      };
+
       const col = boardData.columns.find(c => c.id === currentColumn);
 
       if (editingCard) {
         const card = col.cards.find(c => c.id === editingCard);
-        card.title = title;
-        card.description = description;
-        card.color = selectedColor;
+        Object.assign(card, cardData);
       } else {
         col.cards.push({
           id: Date.now().toString(),
-          title,
-          description,
-          color: selectedColor,
+          ...cardData,
           createdAt: new Date().toISOString()
         });
       }
 
       saveData();
       render();
-      closeModal();
+      closeCardModal();
     }
 
     function editCard(columnId, cardId) {
-      openModal(columnId, cardId);
+      openCardModal(columnId, cardId);
     }
 
     function deleteCard(columnId, cardId) {
@@ -586,6 +1117,57 @@
 
       saveData();
       render();
+    }
+
+    // Review Modal
+    function openReviewModal(columnId, cardId) {
+      reviewingCard = cardId;
+      reviewSourceColumn = columnId;
+      selectedReviewTarget = null;
+
+      document.querySelectorAll('.review-option').forEach(el => el.classList.remove('selected'));
+      document.getElementById('reviewNotes').value = '';
+      document.getElementById('reviewModal').classList.add('active');
+    }
+
+    function closeReviewModal() {
+      document.getElementById('reviewModal').classList.remove('active');
+      reviewingCard = null;
+      reviewSourceColumn = null;
+      selectedReviewTarget = null;
+    }
+
+    function selectReviewOption(el) {
+      document.querySelectorAll('.review-option').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedReviewTarget = el.dataset.target;
+    }
+
+    function submitReview() {
+      if (!selectedReviewTarget) {
+        alert('請選擇驗收結果');
+        return;
+      }
+
+      const notes = document.getElementById('reviewNotes').value.trim();
+      const srcCol = boardData.columns.find(c => c.id === reviewSourceColumn);
+      const cardIndex = srcCol.cards.findIndex(c => c.id === reviewingCard);
+      const [card] = srcCol.cards.splice(cardIndex, 1);
+
+      card.reviewResult = selectedReviewTarget === 'done' ? 'pass' : 'return';
+      card.reviewNotes = notes;
+      
+      if (selectedReviewTarget === 'done') {
+        card.completedAt = new Date().toISOString();
+      }
+
+      const targetCol = boardData.columns.find(c => c.id === selectedReviewTarget);
+      targetCol.cards.push(card);
+
+      saveData();
+      render();
+      closeReviewModal();
+      showToast(`任務已移至 ${targetCol.title}`);
     }
 
     // Color picker
@@ -602,19 +1184,9 @@
       });
     }
 
-    // Column management
-    function addColumn() {
-      const title = prompt('輸入欄位名稱：');
-      if (!title) return;
-
-      boardData.columns.push({
-        id: 'col_' + Date.now(),
-        title,
-        cards: []
-      });
-
-      saveData();
-      render();
+    // Help panel
+    function toggleHelp() {
+      document.getElementById('helpPanel').classList.toggle('active');
     }
 
     // Export/Import
@@ -624,7 +1196,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'kanban-backup.json';
+      a.download = `kanban-backup-${new Date().toISOString().split('T')[0]}.json`;
       a.click();
     }
 
@@ -644,16 +1216,19 @@
         }
       };
       reader.readAsText(file);
+      e.target.value = '';
     }
 
     // Utils
     function escapeHtml(str) {
+      if (!str) return '';
       const div = document.createElement('div');
       div.textContent = str;
       return div.innerHTML;
     }
 
     function formatDate(dateStr) {
+      if (!dateStr) return '';
       const date = new Date(dateStr);
       return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
     }
@@ -664,6 +1239,14 @@
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2000);
     }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCardModal();
+        closeReviewModal();
+      }
+    });
 
     // Init
     loadData();

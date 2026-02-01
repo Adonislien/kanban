@@ -1,28 +1,42 @@
 {
   "columns": [
     {
-      "id": "todo",
-      "title": "📋 待辦",
-      "cards": [
-        {
-          "id": "1",
-          "title": "歡迎使用看板！",
-          "description": "拖拉卡片來移動任務",
-          "color": "#6366f1",
-          "createdAt": "2026-02-01T18:08:00Z"
-        }
-      ]
+      "id": "backlog",
+      "title": "📦 Backlog",
+      "description": "需求池 / 想法池",
+      "cards": []
     },
     {
-      "id": "doing",
-      "title": "🔄 進行中",
+      "id": "todo",
+      "title": "📋 To Do",
+      "description": "已確認可執行",
+      "cards": []
+    },
+    {
+      "id": "pending",
+      "title": "⏸️ Pending",
+      "description": "等待中",
+      "cards": []
+    },
+    {
+      "id": "ongoing",
+      "title": "🔄 Ongoing",
+      "description": "進行中",
+      "cards": []
+    },
+    {
+      "id": "review",
+      "title": "🔍 Review",
+      "description": "驗收",
       "cards": []
     },
     {
       "id": "done",
-      "title": "✅ 已完成",
+      "title": "✅ Done",
+      "description": "已完成",
       "cards": []
     }
   ],
-  "lastUpdated": "2026-02-01T18:08:00Z"
+  "projects": [],
+  "lastUpdated": "2026-02-01T18:40:00Z"
 }
