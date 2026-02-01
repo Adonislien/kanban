@@ -4,7 +4,38 @@
       "id": "backlog",
       "title": "📦 Backlog",
       "description": "需求池 / 想法池",
-      "cards": []
+      "cards": [
+        {
+          "id": "1769974052837",
+          "project": "分析書本知識讓AI利用書本知識分析",
+          "title": "讓本地AI模型更有智慧",
+          "description": "利用 anythingllm 資料庫來存放各種知識並分類，讓本地AI模型可以實際應用這些知識進行分析",
+          "priority": "medium",
+          "assignee": "",
+          "createdDate": "2026-02-01",
+          "dueDate": "",
+          "completedDate": "",
+          "reviewResult": null,
+          "reviewNotes": null,
+          "color": "#6366f1",
+          "createdAt": "2026-02-01T19:27:32.837Z"
+        },
+        {
+          "id": "1769974232033",
+          "project": "學習使用vibe coding",
+          "title": "利用 vibe coding 來製作分析大數據或股票的 app，或是其他實用 App（例如 Kanban）",
+          "description": "可至 GitHub 搜尋相關資料，放入 Review 欄位後再討論可行性",
+          "priority": "medium",
+          "assignee": "",
+          "createdDate": "2026-02-01",
+          "dueDate": "",
+          "completedDate": "",
+          "reviewResult": null,
+          "reviewNotes": null,
+          "color": "#8b5cf6",
+          "createdAt": "2026-02-01T19:30:32.033Z"
+        }
+      ]
     },
     {
       "id": "todo",
@@ -37,6 +68,17 @@
       "cards": []
     }
   ],
-  "projects": [],
-  "lastUpdated": "2026-02-01T18:40:00Z"
+  "projects": [
+    {
+      "name": "分析書本知識讓AI利用書本知識分析",
+      "startDate": "2026-02-01",
+      "endDate": ""
+    },
+    {
+      "name": "學習使用vibe coding",
+      "startDate": "2026-02-01",
+      "endDate": ""
+    }
+  ],
+  "lastUpdated": "2026-02-01T19:30:32.033Z"
 }
