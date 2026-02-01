@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>老大的看板 | Kanban Board</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    .header {
+      padding: 24px 32px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .board {
+      display: flex;
+      gap: 20px;
+      padding: 24px 32px;
+      overflow-x: auto;
+      min-height: calc(100vh - 85px);
+    }
+
+    .column {
+      min-width: 320px;
+      max-width: 320px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 130px);
+    }
+
+    .column-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .column-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card-count {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    .column-content {
+      padding: 12px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .column-content.drag-over {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: grab;
+      transition: all 0.2s ease;
+      border-left: 4px solid var(--card-color, #667eea);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .card.dragging {
+      opacity: 0.5;
+      cursor: grabbing;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .card-description {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.5;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card-date {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .card-action-btn {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 4px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .card-action-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .add-card-btn {
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+
+    .add-card-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 20px;
+      padding: 32px;
+      width: 90%;
+      max-width: 480px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal h2 {
+      font-size: 20px;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #667eea;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .color-picker {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .color-option {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .color-option:hover,
+    .color-option.selected {
+      transform: scale(1.1);
+      border-color: #fff;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 28px;
+    }
+
+    .status-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .status-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📋 老大的看板</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary" onclick="exportData()">📥 匯出</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 匯入</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+      <button class="btn btn-primary" onclick="addColumn()">➕ 新增欄位</button>
+    </div>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <!-- Add/Edit Card Modal -->
+  <div class="modal-overlay" id="cardModal">
+    <div class="modal">
+      <h2 id="modalTitle">新增任務</h2>
+      <div class="form-group">
+        <label>任務標題</label>
+        <input type="text" id="cardTitle" placeholder="輸入任務標題...">
+      </div>
+      <div class="form-group">
+        <label>描述（選填）</label>
+        <textarea id="cardDescription" placeholder="輸入任務描述..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>顏色標籤</label>
+        <div class="color-picker" id="colorPicker">
+          <div class="color-option" style="background: #6366f1" data-color="#6366f1"></div>
+          <div class="color-option" style="background: #8b5cf6" data-color="#8b5cf6"></div>
+          <div class="color-option" style="background: #ec4899" data-color="#ec4899"></div>
+          <div class="color-option" style="background: #ef4444" data-color="#ef4444"></div>
+          <div class="color-option" style="background: #f97316" data-color="#f97316"></div>
+          <div class="color-option" style="background: #eab308" data-color="#eab308"></div>
+          <div class="color-option" style="background: #22c55e" data-color="#22c55e"></div>
+          <div class="color-option" style="background: #14b8a6" data-color="#14b8a6"></div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveCard()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-toast" id="toast">已儲存</div>
+
+  <script>
+    let boardData = {
+      columns: [
+        { id: 'todo', title: '📋 待辦', cards: [] },
+        { id: 'doing', title: '🔄 進行中', cards: [] },
+        { id: 'done', title: '✅ 已完成', cards: [] }
+      ],
+      lastUpdated: new Date().toISOString()
+    };
+
+    let currentColumn = null;
+    let editingCard = null;
+    let selectedColor = '#6366f1';
+
+    // Load data
+    async function loadData() {
+      try {
+        const response = await fetch('data.json');
+        if (response.ok) {
+          boardData = await response.json();
+        }
+      } catch (e) {
+        // Use localStorage fallback
+        const saved = localStorage.getItem('kanbanData');
+        if (saved) {
+          boardData = JSON.parse(saved);
+        }
+      }
+      render();
+    }
+
+    // Save data
+    function saveData() {
+      boardData.lastUpdated = new Date().toISOString();
+      localStorage.setItem('kanbanData', JSON.stringify(boardData));
+      showToast('已儲存 ✓');
+      
+      // Also save to file for Jisoo to read
+      downloadDataSilently();
+    }
+
+    function downloadDataSilently() {
+      // Create a hidden anchor to trigger download
+      const dataStr = JSON.stringify(boardData, null, 2);
+      console.log('Kanban data updated:', dataStr);
+    }
+
+    // Render board
+    function render() {
+      const board = document.getElementById('board');
+      board.innerHTML = '';
+
+      boardData.columns.forEach(column => {
+        const colEl = document.createElement('div');
+        colEl.className = 'column';
+        colEl.innerHTML = `
+          <div class="column-header">
+            <span class="column-title">${column.title}</span>
+            <span class="card-count">${column.cards.length}</span>
+          </div>
+          <div class="column-content" data-column="${column.id}" 
+               ondragover="handleDragOver(event)" 
+               ondragleave="handleDragLeave(event)"
+               ondrop="handleDrop(event, '${column.id}')">
+            ${column.cards.map(card => `
+              <div class="card" draggable="true" 
+                   ondragstart="handleDragStart(event, '${card.id}', '${column.id}')"
+                   ondragend="handleDragEnd(event)"
+                   style="--card-color: ${card.color || '#667eea'}">
+                <div class="card-title">${escapeHtml(card.title)}</div>
+                ${card.description ? `<div class="card-description">${escapeHtml(card.description)}</div>` : ''}
+                <div class="card-footer">
+                  <span class="card-date">${formatDate(card.createdAt)}</span>
+                  <div class="card-actions">
+                    <button class="card-action-btn" onclick="editCard('${column.id}', '${card.id}')">✏️</button>
+                    <button class="card-action-btn" onclick="deleteCard('${column.id}', '${card.id}')">🗑️</button>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+            <button class="add-card-btn" onclick="openModal('${column.id}')">+ 新增任務</button>
+          </div>
+        `;
+        board.appendChild(colEl);
+      });
+    }
+
+    // Drag and Drop
+    let draggedCard = null;
+    let sourceColumn = null;
+
+    function handleDragStart(e, cardId, columnId) {
+      draggedCard = cardId;
+      sourceColumn = columnId;
+      e.target.classList.add('dragging');
+    }
+
+    function handleDragEnd(e) {
+      e.target.classList.remove('dragging');
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleDrop(e, targetColumnId) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+
+      if (!draggedCard || sourceColumn === targetColumnId) return;
+
+      // Find and remove card from source
+      const srcCol = boardData.columns.find(c => c.id === sourceColumn);
+      const cardIndex = srcCol.cards.findIndex(c => c.id === draggedCard);
+      const [card] = srcCol.cards.splice(cardIndex, 1);
+
+      // Add to target
+      const targetCol = boardData.columns.find(c => c.id === targetColumnId);
+      targetCol.cards.push(card);
+
+      saveData();
+      render();
+    }
+
+    // Modal
+    function openModal(columnId, cardId = null) {
+      currentColumn = columnId;
+      editingCard = cardId;
+
+      const modal = document.getElementById('cardModal');
+      const titleInput = document.getElementById('cardTitle');
+      const descInput = document.getElementById('cardDescription');
+
+      if (cardId) {
+        document.getElementById('modalTitle').textContent = '編輯任務';
+        const col = boardData.columns.find(c => c.id === columnId);
+        const card = col.cards.find(c => c.id === cardId);
+        titleInput.value = card.title;
+        descInput.value = card.description || '';
+        selectedColor = card.color || '#6366f1';
+      } else {
+        document.getElementById('modalTitle').textContent = '新增任務';
+        titleInput.value = '';
+        descInput.value = '';
+        selectedColor = '#6366f1';
+      }
+
+      updateColorSelection();
+      modal.classList.add('active');
+      titleInput.focus();
+    }
+
+    function closeModal() {
+      document.getElementById('cardModal').classList.remove('active');
+      currentColumn = null;
+      editingCard = null;
+    }
+
+    function saveCard() {
+      const title = document.getElementById('cardTitle').value.trim();
+      const description = document.getElementById('cardDescription').value.trim();
+
+      if (!title) {
+        alert('請輸入任務標題');
+        return;
+      }
+
+      const col = boardData.columns.find(c => c.id === currentColumn);
+
+      if (editingCard) {
+        const card = col.cards.find(c => c.id === editingCard);
+        card.title = title;
+        card.description = description;
+        card.color = selectedColor;
+      } else {
+        col.cards.push({
+          id: Date.now().toString(),
+          title,
+          description,
+          color: selectedColor,
+          createdAt: new Date().toISOString()
+        });
+      }
+
+      saveData();
+      render();
+      closeModal();
+    }
+
+    function editCard(columnId, cardId) {
+      openModal(columnId, cardId);
+    }
+
+    function deleteCard(columnId, cardId) {
+      if (!confirm('確定要刪除這個任務嗎？')) return;
+
+      const col = boardData.columns.find(c => c.id === columnId);
+      col.cards = col.cards.filter(c => c.id !== cardId);
+
+      saveData();
+      render();
+    }
+
+    // Color picker
+    document.querySelectorAll('.color-option').forEach(el => {
+      el.addEventListener('click', () => {
+        selectedColor = el.dataset.color;
+        updateColorSelection();
+      });
+    });
+
+    function updateColorSelection() {
+      document.querySelectorAll('.color-option').forEach(el => {
+        el.classList.toggle('selected', el.dataset.color === selectedColor);
+      });
+    }
+
+    // Column management
+    function addColumn() {
+      const title = prompt('輸入欄位名稱：');
+      if (!title) return;
+
+      boardData.columns.push({
+        id: 'col_' + Date.now(),
+        title,
+        cards: []
+      });
+
+      saveData();
+      render();
+    }
+
+    // Export/Import
+    function exportData() {
+      const dataStr = JSON.stringify(boardData, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'kanban-backup.json';
+      a.click();
+    }
+
+    function importData(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        try {
+          boardData = JSON.parse(evt.target.result);
+          saveData();
+          render();
+          showToast('匯入成功 ✓');
+        } catch {
+          alert('檔案格式錯誤');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Utils
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // Init
+    loadData();
+  </script>
+</body>
+</html>
