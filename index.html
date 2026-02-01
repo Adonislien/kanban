@@ -22,7 +22,7 @@
 
     /* Header */
     .header {
-      padding: 16px 24px;
+      padding: 14px 24px;
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -41,7 +41,7 @@
     }
 
     .header h1 {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
       -webkit-background-clip: text;
@@ -50,7 +50,7 @@
     }
 
     .project-selector {
-      padding: 8px 16px;
+      padding: 8px 14px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 8px;
@@ -61,20 +61,21 @@
 
     .header-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .btn {
-      padding: 8px 16px;
+      padding: 8px 14px;
       border: none;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .btn-primary {
@@ -106,6 +107,7 @@
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s;
+      font-size: 14px;
     }
 
     .btn-icon:hover {
@@ -113,29 +115,55 @@
       color: #fff;
     }
 
+    /* Project Info Bar */
+    .project-bar {
+      display: none;
+      padding: 10px 24px;
+      background: rgba(102, 126, 234, 0.1);
+      border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      gap: 20px;
+      align-items: center;
+    }
+
+    .project-bar.active {
+      display: flex;
+    }
+
+    .project-bar-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-bar-item strong {
+      color: #fff;
+    }
+
     /* Board */
     .board {
       display: flex;
-      gap: 16px;
-      padding: 20px 24px;
+      gap: 14px;
+      padding: 16px 24px;
       overflow-x: auto;
-      min-height: calc(100vh - 65px);
+      min-height: calc(100vh - 60px);
     }
 
     .column {
-      min-width: 280px;
-      max-width: 280px;
+      min-width: 270px;
+      max-width: 270px;
       background: rgba(255, 255, 255, 0.04);
       backdrop-filter: blur(10px);
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       flex-direction: column;
-      max-height: calc(100vh - 100px);
+      max-height: calc(100vh - 95px);
     }
 
     .column-header {
-      padding: 14px 16px;
+      padding: 12px 14px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
@@ -143,11 +171,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .column-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
     }
 
@@ -155,22 +183,22 @@
       background: rgba(255, 255, 255, 0.12);
       padding: 2px 8px;
       border-radius: 10px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
     }
 
     .column-desc {
-      font-size: 11px;
+      font-size: 10px;
       color: rgba(255, 255, 255, 0.4);
     }
 
     .column-content {
-      padding: 10px;
+      padding: 8px;
       flex: 1;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .column-content.drag-over {
@@ -182,7 +210,7 @@
     .card {
       background: rgba(255, 255, 255, 0.06);
       border-radius: 10px;
-      padding: 14px;
+      padding: 12px;
       cursor: grab;
       transition: all 0.2s ease;
       border-left: 3px solid var(--card-color, #667eea);
@@ -201,25 +229,26 @@
     }
 
     .card-project {
-      font-size: 10px;
+      font-size: 9px;
       color: rgba(255, 255, 255, 0.4);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .card-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       line-height: 1.4;
+      padding-right: 50px;
     }
 
     .card-description {
-      font-size: 11px;
+      font-size: 10px;
       color: rgba(255, 255, 255, 0.5);
       line-height: 1.5;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -229,59 +258,51 @@
     .card-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 10px;
+      gap: 5px;
+      margin-bottom: 8px;
     }
 
     .card-tag {
-      font-size: 10px;
-      padding: 3px 8px;
+      font-size: 9px;
+      padding: 2px 6px;
       border-radius: 4px;
       background: rgba(255, 255, 255, 0.1);
     }
 
-    .priority-high {
-      background: rgba(239, 68, 68, 0.2);
-      color: #fca5a5;
-    }
-
-    .priority-medium {
-      background: rgba(249, 115, 22, 0.2);
-      color: #fdba74;
-    }
-
-    .priority-low {
-      background: rgba(34, 197, 94, 0.2);
-      color: #86efac;
-    }
+    .priority-high { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .priority-medium { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
+    .priority-low { background: rgba(34, 197, 94, 0.2); color: #86efac; }
 
     .card-dates {
-      font-size: 10px;
+      font-size: 9px;
       color: rgba(255, 255, 255, 0.4);
       display: flex;
-      gap: 12px;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .card-date-row {
+      display: flex;
+      gap: 10px;
     }
 
     .card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 10px;
-      padding-top: 10px;
+      margin-top: 8px;
+      padding-top: 8px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .card-assignee {
-      font-size: 11px;
+      font-size: 10px;
       color: rgba(255, 255, 255, 0.6);
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
 
     .card-actions {
       display: flex;
-      gap: 4px;
+      gap: 3px;
       opacity: 0;
       transition: opacity 0.2s;
     }
@@ -295,8 +316,8 @@
       border: none;
       color: rgba(255, 255, 255, 0.6);
       cursor: pointer;
-      font-size: 12px;
-      padding: 4px 6px;
+      font-size: 11px;
+      padding: 4px 5px;
       border-radius: 4px;
       transition: all 0.2s;
     }
@@ -309,23 +330,16 @@
     /* Review Badge */
     .review-badge {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 9px;
-      padding: 2px 6px;
+      top: 8px;
+      right: 8px;
+      font-size: 8px;
+      padding: 2px 5px;
       border-radius: 4px;
       font-weight: 600;
     }
 
-    .review-pass {
-      background: rgba(34, 197, 94, 0.2);
-      color: #86efac;
-    }
-
-    .review-return {
-      background: rgba(249, 115, 22, 0.2);
-      color: #fdba74;
-    }
+    .review-pass { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+    .review-return { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
 
     .add-card-btn {
       padding: 10px;
@@ -335,7 +349,7 @@
       color: rgba(255, 255, 255, 0.4);
       cursor: pointer;
       transition: all 0.2s;
-      font-size: 12px;
+      font-size: 11px;
       text-align: center;
     }
 
@@ -357,19 +371,17 @@
       backdrop-filter: blur(8px);
       justify-content: center;
       align-items: flex-start;
-      padding: 40px 20px;
+      padding: 30px 16px;
       z-index: 1000;
       overflow-y: auto;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
 
     .modal {
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border-radius: 16px;
-      padding: 28px;
+      border-radius: 14px;
+      padding: 24px;
       width: 100%;
       max-width: 520px;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -380,11 +392,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .modal h2 {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       -webkit-background-clip: text;
@@ -396,34 +408,36 @@
       background: none;
       border: none;
       color: rgba(255, 255, 255, 0.5);
-      font-size: 20px;
+      font-size: 18px;
       cursor: pointer;
       padding: 4px;
     }
 
-    .modal-close:hover {
-      color: #fff;
-    }
+    .modal-close:hover { color: #fff; }
 
     .form-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
+      gap: 12px;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
     }
 
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
 
-    .form-group.full {
-      grid-column: 1 / -1;
-    }
+    .form-group.full { grid-column: 1 / -1; }
 
     .form-group label {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       font-weight: 500;
     }
 
@@ -431,12 +445,12 @@
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 10px 14px;
+      padding: 9px 12px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 8px;
       color: #fff;
-      font-size: 13px;
+      font-size: 12px;
       transition: all 0.2s;
     }
 
@@ -449,27 +463,22 @@
     }
 
     .form-group textarea {
-      min-height: 80px;
+      min-height: 70px;
       resize: vertical;
     }
 
-    .form-group select {
-      cursor: pointer;
-    }
-
-    .form-group select option {
-      background: #1a1a2e;
-    }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: #1a1a2e; }
 
     .color-picker {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .color-option {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 6px;
       cursor: pointer;
       border: 2px solid transparent;
@@ -483,25 +492,25 @@
     }
 
     .form-section {
-      padding-top: 18px;
-      margin-top: 18px;
+      padding-top: 14px;
+      margin-top: 14px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .form-section-title {
-      font-size: 12px;
+      font-size: 11px;
       color: rgba(255, 255, 255, 0.4);
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .modal-actions {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: flex-end;
-      margin-top: 24px;
-      padding-top: 20px;
+      margin-top: 20px;
+      padding-top: 16px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
@@ -509,12 +518,12 @@
     .review-options {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
     .review-option {
-      padding: 14px;
+      padding: 12px;
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(255, 255, 255, 0.1);
       border-radius: 10px;
@@ -523,41 +532,27 @@
       text-align: center;
     }
 
-    .review-option:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
+    .review-option:hover { background: rgba(255, 255, 255, 0.1); }
 
     .review-option.selected {
       border-color: #667eea;
       background: rgba(102, 126, 234, 0.15);
     }
 
-    .review-option-icon {
-      font-size: 24px;
-      margin-bottom: 6px;
-    }
-
-    .review-option-title {
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .review-option-desc {
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.5);
-    }
+    .review-option-icon { font-size: 22px; margin-bottom: 4px; }
+    .review-option-title { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+    .review-option-desc { font-size: 9px; color: rgba(255, 255, 255, 0.5); }
 
     /* Toast */
     .status-toast {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      right: 20px;
       background: linear-gradient(135deg, #10b981 0%, #059669 100%);
       color: white;
-      padding: 12px 20px;
+      padding: 10px 18px;
       border-radius: 10px;
-      font-size: 13px;
+      font-size: 12px;
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.3s ease;
@@ -574,77 +569,102 @@
     .help-panel {
       display: none;
       position: fixed;
-      top: 65px;
+      top: 0;
       right: 0;
-      width: 320px;
-      height: calc(100vh - 65px);
+      width: 380px;
+      height: 100vh;
       background: rgba(15, 15, 35, 0.98);
       border-left: 1px solid rgba(255, 255, 255, 0.1);
       padding: 20px;
       overflow-y: auto;
-      z-index: 50;
+      z-index: 150;
     }
 
-    .help-panel.active {
-      display: block;
+    .help-panel.active { display: block; }
+
+    .help-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .help-panel h3 {
-      font-size: 14px;
-      margin-bottom: 16px;
-      color: #667eea;
+      font-size: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .help-section {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
     }
 
     .help-section h4 {
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 8px;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .help-section p {
+    .help-section p, .help-section ul {
       font-size: 11px;
       color: rgba(255, 255, 255, 0.5);
-      line-height: 1.6;
+      line-height: 1.7;
+    }
+
+    .help-section ul {
+      margin-left: 16px;
+      margin-top: 6px;
+    }
+
+    .help-section li {
+      margin-bottom: 4px;
     }
 
     .flow-diagram {
       font-size: 10px;
-      color: rgba(255, 255, 255, 0.6);
-      background: rgba(255, 255, 255, 0.05);
-      padding: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 14px;
       border-radius: 8px;
-      font-family: monospace;
+      font-family: 'SF Mono', Monaco, monospace;
       line-height: 1.8;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .mindmap {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 14px;
+      border-radius: 8px;
+      font-family: 'SF Mono', Monaco, monospace;
+      line-height: 1.6;
+      white-space: pre;
+      overflow-x: auto;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
       .header {
-        padding: 12px 16px;
+        padding: 12px 14px;
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 10px;
       }
-
-      .board {
-        padding: 16px;
-      }
-
-      .column {
-        min-width: 260px;
-        max-width: 260px;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
-      .help-panel {
-        width: 100%;
-      }
+      .board { padding: 12px; }
+      .column { min-width: 250px; max-width: 250px; }
+      .form-row, .form-row-3 { grid-template-columns: 1fr; }
+      .help-panel { width: 100%; }
     }
   </style>
 </head>
@@ -658,6 +678,7 @@
     </div>
     <div class="header-actions">
       <button class="btn-icon" onclick="toggleHelp()" title="流程說明">❓</button>
+      <button class="btn btn-secondary" onclick="openProjectModal()">📁 專案</button>
       <button class="btn btn-secondary" onclick="exportData()">📥 匯出</button>
       <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 匯入</button>
       <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
@@ -665,57 +686,130 @@
     </div>
   </div>
 
+  <div class="project-bar" id="projectBar">
+    <div class="project-bar-item">📁 <strong id="projectBarName">-</strong></div>
+    <div class="project-bar-item">📅 開始：<strong id="projectBarStart">-</strong></div>
+    <div class="project-bar-item">🎯 預計完成：<strong id="projectBarEnd">-</strong></div>
+    <div class="project-bar-item">📊 進度：<strong id="projectBarProgress">-</strong></div>
+  </div>
+
   <div class="board" id="board"></div>
 
   <!-- Help Panel -->
   <div class="help-panel" id="helpPanel">
-    <h3>📖 Kanban 流程說明</h3>
-    
-    <div class="help-section">
-      <h4>流程順序</h4>
-      <div class="flow-diagram">
-Backlog → To Do → Pending → Ongoing → Review → Done
-        ↑                                    ↓
-        ←───── 方向錯誤 / 大改 ──────────────┘
-                    ↓
-              To Do ← 重排時間
-                    ↓
-              Ongoing ← 小修
-      </div>
+    <div class="help-panel-header">
+      <h3>📖 Kanban 工作流程說明</h3>
+      <button class="btn-icon" onclick="toggleHelp()">✕</button>
     </div>
 
     <div class="help-section">
-      <h4>📦 Backlog</h4>
-      <p>需求池/想法池。收集所有尚未確認的任務、新想法。Review 後發現方向錯誤的任務會退回這裡。</p>
+      <h4>🔄 流程總覽</h4>
+      <p>本流程為「可回流式 Kanban」，允許任務在不同階段之間退回修正，避免錯誤任務持續消耗時間與專注力。</p>
+      <div class="flow-diagram">Backlog → To Do → Pending → Ongoing → Review → Done
+   ↑                                        ↓
+   ←─────────── 方向錯誤/大改 ──────────────┘
+                      ↓
+               To Do ← 重排時間
+                      ↓
+               Ongoing ← 小修</div>
     </div>
 
     <div class="help-section">
-      <h4>📋 To Do</h4>
-      <p>已確認可執行的任務，條件與需求已明確，可立即開工。</p>
+      <h4>📦 Backlog（需求池 / 想法池）</h4>
+      <p>用途：收集所有尚未確認是否要執行的任務、新想法、未排期需求。</p>
+      <ul>
+        <li>不急、可長期存放</li>
+        <li>可能會被取消或延後</li>
+        <li>Review 後發現方向錯誤的任務退回這裡</li>
+      </ul>
     </div>
 
     <div class="help-section">
-      <h4>⏸️ Pending</h4>
-      <p>等待外部條件：等資料、等回覆、等系統/API/客戶。避免任務卡在 Ongoing 造成壓力。</p>
+      <h4>📋 To Do（已確認可執行）</h4>
+      <p>用途：已確認一定會做的任務，條件與需求已明確。</p>
+      <ul>
+        <li>可立即開工</li>
+        <li>已排定優先順序</li>
+        <li>Backlog 確認後移入</li>
+        <li>Review 後需重新排程的任務</li>
+      </ul>
     </div>
 
     <div class="help-section">
-      <h4>🔄 Ongoing</h4>
-      <p>正在執行的任務。控制數量，專注優先！不適合放等待或未釐清的任務。</p>
+      <h4>⏸️ Pending（等待中）</h4>
+      <p>用途：任務暫停，等待外部條件。</p>
+      <ul>
+        <li>等資料、等回覆</li>
+        <li>等系統 / API / 客戶 / 上游</li>
+        <li>Pending 不代表失敗</li>
+        <li>避免任務卡在 Ongoing 造成心理壓力</li>
+      </ul>
     </div>
 
     <div class="help-section">
-      <h4>🔍 Review</h4>
-      <p>驗收階段。可退回至：<br>
-      • Done（通過）<br>
-      • Ongoing（小修）<br>
-      • To Do（重排）<br>
-      • Backlog（方向錯誤）</p>
+      <h4>🔄 Ongoing（進行中）</h4>
+      <p>用途：正在實際執行的任務。</p>
+      <ul>
+        <li>同時進行的任務數量要有限</li>
+        <li>專注優先，避免多工分心</li>
+        <li>最消耗時間與心力的區域</li>
+        <li>不適合放等待或未釐清的任務</li>
+      </ul>
     </div>
 
     <div class="help-section">
-      <h4>✅ Done</h4>
-      <p>任務完成，可交付。</p>
+      <h4>🔍 Review（驗收）</h4>
+      <p>目的：確認任務是否達到可交付標準，檢查品質、邏輯、完整度。</p>
+      <ul>
+        <li>✅ 通過 → Done（任務完成、可交付）</li>
+        <li>🔧 小修 → Ongoing（微調內容）</li>
+        <li>📅 重排 → To Do（需重新排時間）</li>
+        <li>🔄 大改 → Backlog（方向錯誤、需重新定義）</li>
+      </ul>
+    </div>
+
+    <div class="help-section">
+      <h4>✅ Done（完成）</h4>
+      <p>任務完成，可交付，無需再修改。</p>
+      <ul>
+        <li>記錄實際完成日</li>
+        <li>交付成果</li>
+        <li>成果回顧</li>
+      </ul>
+    </div>
+
+    <div class="help-section">
+      <h4>🗺️ 流程心智圖</h4>
+      <div class="mindmap">Kanban 工作流程
+├─ 專案資訊
+│  ├─ 專案名稱
+│  ├─ 專案開始日
+│  └─ 專案預計結束日
+├─ Backlog（需求/想法）
+│  ├─ 新需求
+│  ├─ 未確認任務
+│  └─ Review 大改退回
+├─ To Do（已確認）
+│  ├─ 需求已確認
+│  ├─ 資源已到位
+│  └─ 排定執行順序
+├─ Pending（等待中）
+│  ├─ 等資料
+│  ├─ 等回覆
+│  └─ 等外部條件
+├─ Ongoing（進行中）
+│  ├─ 實際執行
+│  ├─ 控制任務數量
+│  └─ 專注處理
+├─ Review（驗收）
+│  ├─ 通過 → Done
+│  ├─ 小修 → Ongoing
+│  ├─ 重排 → To Do
+│  └─ 方向錯 → Backlog
+└─ Done（完成）
+   ├─ 任務完成日
+   ├─ 交付成果
+   └─ 成果回顧</div>
     </div>
   </div>
 
@@ -730,7 +824,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       <div class="form-row">
         <div class="form-group">
           <label>專案名稱</label>
-          <input type="text" id="cardProject" placeholder="例：網站改版" list="projectList">
+          <input type="text" id="cardProject" placeholder="選擇或輸入專案" list="projectList">
           <datalist id="projectList"></datalist>
         </div>
         <div class="form-group">
@@ -740,7 +834,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       </div>
 
       <div class="form-group">
-        <label>任務標題 *</label>
+        <label>任務名稱 *</label>
         <input type="text" id="cardTitle" placeholder="輸入任務標題...">
       </div>
 
@@ -759,8 +853,33 @@ Backlog → To Do → Pending → Ongoing → Review → Done
           </select>
         </div>
         <div class="form-group">
-          <label>預計完成日</label>
-          <input type="date" id="cardDueDate">
+          <label>目前狀態</label>
+          <select id="cardStatus">
+            <option value="backlog">📦 Backlog</option>
+            <option value="todo">📋 To Do</option>
+            <option value="pending">⏸️ Pending</option>
+            <option value="ongoing">🔄 Ongoing</option>
+            <option value="review">🔍 Review</option>
+            <option value="done">✅ Done</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">日期</div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>建立日期</label>
+            <input type="date" id="cardCreatedDate">
+          </div>
+          <div class="form-group">
+            <label>預計完成日</label>
+            <input type="date" id="cardDueDate">
+          </div>
+          <div class="form-group">
+            <label>實際完成日</label>
+            <input type="date" id="cardCompletedDate">
+          </div>
         </div>
       </div>
 
@@ -780,9 +899,62 @@ Backlog → To Do → Pending → Ongoing → Review → Done
         </div>
       </div>
 
+      <div class="form-section" id="reviewSection" style="display:none;">
+        <div class="form-section-title">Review 資訊</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Review 結果</label>
+            <select id="cardReviewResult">
+              <option value="">未驗收</option>
+              <option value="pass">✓ 通過</option>
+              <option value="return">↩ 退回</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Review 備註或退回原因</label>
+          <textarea id="cardReviewNotes" placeholder="說明驗收結果..."></textarea>
+        </div>
+      </div>
+
       <div class="modal-actions">
         <button class="btn btn-secondary" onclick="closeCardModal()">取消</button>
         <button class="btn btn-primary" onclick="saveCard()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Modal -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>📁 專案管理</h2>
+        <button class="modal-close" onclick="closeProjectModal()">✕</button>
+      </div>
+
+      <div id="projectListContainer"></div>
+
+      <div class="form-section">
+        <div class="form-section-title">新增 / 編輯專案</div>
+        <div class="form-group">
+          <label>專案名稱</label>
+          <input type="text" id="projectName" placeholder="輸入專案名稱">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>專案開始日</label>
+            <input type="date" id="projectStartDate">
+          </div>
+          <div class="form-group">
+            <label>專案預計結束日</label>
+            <input type="date" id="projectEndDate">
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeProjectModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveProject()">儲存專案</button>
       </div>
     </div>
   </div>
@@ -795,7 +967,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
         <button class="modal-close" onclick="closeReviewModal()">✕</button>
       </div>
 
-      <p style="font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 20px;">
+      <p style="font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 16px;">
         選擇驗收結果，決定任務下一步：
       </p>
 
@@ -803,7 +975,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
         <div class="review-option" data-target="done" onclick="selectReviewOption(this)">
           <div class="review-option-icon">✅</div>
           <div class="review-option-title">通過 → Done</div>
-          <div class="review-option-desc">任務完成，可交付</div>
+          <div class="review-option-desc">任務完成、可交付</div>
         </div>
         <div class="review-option" data-target="ongoing" onclick="selectReviewOption(this)">
           <div class="review-option-icon">🔧</div>
@@ -858,6 +1030,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
     let reviewSourceColumn = null;
     let selectedReviewTarget = null;
     let currentProjectFilter = '';
+    let editingProject = null;
 
     // Load data
     async function loadData() {
@@ -871,6 +1044,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
         const saved = localStorage.getItem('kanbanData');
         if (saved) boardData = JSON.parse(saved);
       }
+      if (!boardData.projects) boardData.projects = [];
       updateProjectList();
       render();
     }
@@ -885,29 +1059,60 @@ Backlog → To Do → Pending → Ongoing → Review → Done
 
     // Update project list
     function updateProjectList() {
-      const projects = new Set();
+      const projectNames = new Set();
       boardData.columns.forEach(col => {
         col.cards.forEach(card => {
-          if (card.project) projects.add(card.project);
+          if (card.project) projectNames.add(card.project);
         });
       });
-      boardData.projects = Array.from(projects);
+      
+      // Merge with saved projects
+      boardData.projects.forEach(p => projectNames.add(p.name));
 
       const datalist = document.getElementById('projectList');
       const filter = document.getElementById('projectFilter');
       
-      datalist.innerHTML = boardData.projects.map(p => `<option value="${p}">`).join('');
+      const allProjects = Array.from(projectNames).sort();
+      datalist.innerHTML = allProjects.map(p => `<option value="${escapeHtml(p)}">`).join('');
       
       const currentVal = filter.value;
       filter.innerHTML = '<option value="">所有專案</option>' + 
-        boardData.projects.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+        allProjects.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
       filter.value = currentVal;
     }
 
     // Filter by project
     function filterByProject() {
       currentProjectFilter = document.getElementById('projectFilter').value;
+      updateProjectBar();
       render();
+    }
+
+    function updateProjectBar() {
+      const bar = document.getElementById('projectBar');
+      if (!currentProjectFilter) {
+        bar.classList.remove('active');
+        return;
+      }
+
+      const project = boardData.projects.find(p => p.name === currentProjectFilter);
+      document.getElementById('projectBarName').textContent = currentProjectFilter;
+      document.getElementById('projectBarStart').textContent = project?.startDate || '-';
+      document.getElementById('projectBarEnd').textContent = project?.endDate || '-';
+
+      // Calculate progress
+      let total = 0, done = 0;
+      boardData.columns.forEach(col => {
+        col.cards.forEach(card => {
+          if (card.project === currentProjectFilter) {
+            total++;
+            if (col.id === 'done') done++;
+          }
+        });
+      });
+      document.getElementById('projectBarProgress').textContent = total > 0 ? `${done}/${total} (${Math.round(done/total*100)}%)` : '0/0';
+      
+      bar.classList.add('active');
     }
 
     // Render board
@@ -955,6 +1160,8 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       const isReviewColumn = columnId === 'review';
       const reviewBtn = isReviewColumn ? `<button class="card-action-btn" onclick="openReviewModal('${columnId}', '${card.id}')" title="驗收">🔍</button>` : '';
 
+      const createdDate = card.createdDate || (card.createdAt ? card.createdAt.split('T')[0] : '');
+      
       return `
         <div class="card" draggable="true" 
              ondragstart="handleDragStart(event, '${card.id}', '${columnId}')"
@@ -968,8 +1175,11 @@ Backlog → To Do → Pending → Ongoing → Review → Done
             <span class="card-tag ${priorityClass}">${priorityLabel}</span>
           </div>
           <div class="card-dates">
-            <span>📅 ${formatDate(card.createdAt)}</span>
-            ${card.dueDate ? `<span>🎯 ${card.dueDate}</span>` : ''}
+            <div class="card-date-row">
+              <span>📅 建立：${createdDate || '-'}</span>
+              ${card.dueDate ? `<span>🎯 預計：${card.dueDate}</span>` : ''}
+            </div>
+            ${card.completedDate ? `<span>✅ 完成：${card.completedDate}</span>` : ''}
           </div>
           <div class="card-footer">
             <span class="card-assignee">${card.assignee ? '👤 ' + escapeHtml(card.assignee) : ''}</span>
@@ -1016,8 +1226,13 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       const cardIndex = srcCol.cards.findIndex(c => c.id === draggedCard);
       const [card] = srcCol.cards.splice(cardIndex, 1);
 
-      // Clear review result when moving
-      if (sourceColumn !== targetColumnId) {
+      // Auto-set completed date when moving to Done
+      if (targetColumnId === 'done' && !card.completedDate) {
+        card.completedDate = new Date().toISOString().split('T')[0];
+      }
+
+      // Clear review result when moving (except to done)
+      if (sourceColumn !== targetColumnId && targetColumnId !== 'done') {
         card.reviewResult = null;
         card.reviewNotes = null;
       }
@@ -1026,6 +1241,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       targetCol.cards.push(card);
 
       saveData();
+      updateProjectBar();
       render();
     }
 
@@ -1035,6 +1251,8 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       editingCard = cardId;
 
       const modal = document.getElementById('cardModal');
+      const statusSelect = document.getElementById('cardStatus');
+      const reviewSection = document.getElementById('reviewSection');
       
       if (cardId) {
         document.getElementById('modalTitle').textContent = '編輯任務';
@@ -1046,17 +1264,31 @@ Backlog → To Do → Pending → Ongoing → Review → Done
         document.getElementById('cardTitle').value = card.title;
         document.getElementById('cardDescription').value = card.description || '';
         document.getElementById('cardPriority').value = card.priority || 'medium';
+        document.getElementById('cardCreatedDate').value = card.createdDate || (card.createdAt ? card.createdAt.split('T')[0] : '');
         document.getElementById('cardDueDate').value = card.dueDate || '';
+        document.getElementById('cardCompletedDate').value = card.completedDate || '';
+        document.getElementById('cardReviewResult').value = card.reviewResult || '';
+        document.getElementById('cardReviewNotes').value = card.reviewNotes || '';
+        statusSelect.value = columnId;
         selectedColor = card.color || '#6366f1';
+
+        reviewSection.style.display = 'block';
       } else {
         document.getElementById('modalTitle').textContent = '新增任務';
-        document.getElementById('cardProject').value = '';
+        document.getElementById('cardProject').value = currentProjectFilter || '';
         document.getElementById('cardAssignee').value = '';
         document.getElementById('cardTitle').value = '';
         document.getElementById('cardDescription').value = '';
         document.getElementById('cardPriority').value = 'medium';
+        document.getElementById('cardCreatedDate').value = new Date().toISOString().split('T')[0];
         document.getElementById('cardDueDate').value = '';
+        document.getElementById('cardCompletedDate').value = '';
+        document.getElementById('cardReviewResult').value = '';
+        document.getElementById('cardReviewNotes').value = '';
+        statusSelect.value = columnId;
         selectedColor = '#6366f1';
+
+        reviewSection.style.display = 'none';
       }
 
       updateColorSelection();
@@ -1073,27 +1305,39 @@ Backlog → To Do → Pending → Ongoing → Review → Done
     function saveCard() {
       const title = document.getElementById('cardTitle').value.trim();
       if (!title) {
-        alert('請輸入任務標題');
+        alert('請輸入任務名稱');
         return;
       }
 
+      const newStatus = document.getElementById('cardStatus').value;
       const cardData = {
         project: document.getElementById('cardProject').value.trim(),
         assignee: document.getElementById('cardAssignee').value.trim(),
         title,
         description: document.getElementById('cardDescription').value.trim(),
         priority: document.getElementById('cardPriority').value,
+        createdDate: document.getElementById('cardCreatedDate').value,
         dueDate: document.getElementById('cardDueDate').value,
+        completedDate: document.getElementById('cardCompletedDate').value,
+        reviewResult: document.getElementById('cardReviewResult').value || null,
+        reviewNotes: document.getElementById('cardReviewNotes').value.trim() || null,
         color: selectedColor
       };
 
-      const col = boardData.columns.find(c => c.id === currentColumn);
-
       if (editingCard) {
-        const card = col.cards.find(c => c.id === editingCard);
+        // Find and update existing card
+        const srcCol = boardData.columns.find(c => c.id === currentColumn);
+        const cardIndex = srcCol.cards.findIndex(c => c.id === editingCard);
+        const [card] = srcCol.cards.splice(cardIndex, 1);
+        
         Object.assign(card, cardData);
+
+        // Move to new column if status changed
+        const targetCol = boardData.columns.find(c => c.id === newStatus);
+        targetCol.cards.push(card);
       } else {
-        col.cards.push({
+        const targetCol = boardData.columns.find(c => c.id === newStatus);
+        targetCol.cards.push({
           id: Date.now().toString(),
           ...cardData,
           createdAt: new Date().toISOString()
@@ -1101,6 +1345,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       }
 
       saveData();
+      updateProjectBar();
       render();
       closeCardModal();
     }
@@ -1116,7 +1361,114 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       col.cards = col.cards.filter(c => c.id !== cardId);
 
       saveData();
+      updateProjectBar();
       render();
+    }
+
+    // Project Modal
+    function openProjectModal() {
+      editingProject = null;
+      document.getElementById('projectName').value = '';
+      document.getElementById('projectStartDate').value = '';
+      document.getElementById('projectEndDate').value = '';
+      renderProjectList();
+      document.getElementById('projectModal').classList.add('active');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('projectModal').classList.remove('active');
+    }
+
+    function renderProjectList() {
+      const container = document.getElementById('projectListContainer');
+      if (!boardData.projects || boardData.projects.length === 0) {
+        container.innerHTML = '<p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:16px;">尚無專案</p>';
+        return;
+      }
+
+      container.innerHTML = `
+        <div style="margin-bottom:16px;">
+          ${boardData.projects.map(p => `
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(255,255,255,0.05);border-radius:8px;margin-bottom:8px;">
+              <div>
+                <div style="font-size:13px;font-weight:500;">${escapeHtml(p.name)}</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.5);">${p.startDate || '?'} ~ ${p.endDate || '?'}</div>
+              </div>
+              <div style="display:flex;gap:6px;">
+                <button class="card-action-btn" onclick="editProject('${escapeHtml(p.name)}')">✏️</button>
+                <button class="card-action-btn" onclick="deleteProject('${escapeHtml(p.name)}')">🗑️</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function editProject(name) {
+      const project = boardData.projects.find(p => p.name === name);
+      if (!project) return;
+      
+      editingProject = name;
+      document.getElementById('projectName').value = project.name;
+      document.getElementById('projectStartDate').value = project.startDate || '';
+      document.getElementById('projectEndDate').value = project.endDate || '';
+    }
+
+    function deleteProject(name) {
+      if (!confirm(`確定要刪除專案「${name}」嗎？（任務不會被刪除）`)) return;
+      boardData.projects = boardData.projects.filter(p => p.name !== name);
+      saveData();
+      renderProjectList();
+      updateProjectList();
+    }
+
+    function saveProject() {
+      const name = document.getElementById('projectName').value.trim();
+      if (!name) {
+        alert('請輸入專案名稱');
+        return;
+      }
+
+      const projectData = {
+        name,
+        startDate: document.getElementById('projectStartDate').value,
+        endDate: document.getElementById('projectEndDate').value
+      };
+
+      if (editingProject) {
+        // Update existing
+        const idx = boardData.projects.findIndex(p => p.name === editingProject);
+        if (idx >= 0) {
+          // Also update cards if name changed
+          if (editingProject !== name) {
+            boardData.columns.forEach(col => {
+              col.cards.forEach(card => {
+                if (card.project === editingProject) card.project = name;
+              });
+            });
+          }
+          boardData.projects[idx] = projectData;
+        }
+      } else {
+        // Check duplicate
+        if (boardData.projects.some(p => p.name === name)) {
+          alert('專案名稱已存在');
+          return;
+        }
+        boardData.projects.push(projectData);
+      }
+
+      saveData();
+      renderProjectList();
+      updateProjectList();
+      
+      // Reset form
+      editingProject = null;
+      document.getElementById('projectName').value = '';
+      document.getElementById('projectStartDate').value = '';
+      document.getElementById('projectEndDate').value = '';
+      
+      showToast('專案已儲存 ✓');
     }
 
     // Review Modal
@@ -1158,13 +1510,14 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       card.reviewNotes = notes;
       
       if (selectedReviewTarget === 'done') {
-        card.completedAt = new Date().toISOString();
+        card.completedDate = new Date().toISOString().split('T')[0];
       }
 
       const targetCol = boardData.columns.find(c => c.id === selectedReviewTarget);
       targetCol.cards.push(card);
 
       saveData();
+      updateProjectBar();
       render();
       closeReviewModal();
       showToast(`任務已移至 ${targetCol.title}`);
@@ -1208,6 +1561,7 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       reader.onload = (evt) => {
         try {
           boardData = JSON.parse(evt.target.result);
+          if (!boardData.projects) boardData.projects = [];
           saveData();
           render();
           showToast('匯入成功 ✓');
@@ -1227,12 +1581,6 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       return div.innerHTML;
     }
 
-    function formatDate(dateStr) {
-      if (!dateStr) return '';
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('zh-TW', { month: 'short', day: 'numeric' });
-    }
-
     function showToast(message) {
       const toast = document.getElementById('toast');
       toast.textContent = message;
@@ -1245,6 +1593,8 @@ Backlog → To Do → Pending → Ongoing → Review → Done
       if (e.key === 'Escape') {
         closeCardModal();
         closeReviewModal();
+        closeProjectModal();
+        document.getElementById('helpPanel').classList.remove('active');
       }
     });
 
