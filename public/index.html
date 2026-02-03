@@ -41,10 +41,28 @@
     .sync-status.synced { background: rgba(34, 197, 94, 0.2); color: #86efac; }
     .sync-status.syncing { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
     .sync-status.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .sync-status.offline { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
     .sync-status.conflict { background: rgba(239, 68, 68, 0.3); color: #fca5a5; }
     .sync-indicator { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
     .sync-status.syncing .sync-indicator { animation: pulse 1s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* Version Badge */
+    .version-badge {
+      padding: 4px 10px;
+      background: rgba(102, 126, 234, 0.15);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #a5b4fc;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .version-badge:hover {
+      background: rgba(102, 126, 234, 0.25);
+      transform: scale(1.05);
+    }
 
     /* Header */
     .header {
@@ -282,7 +300,7 @@
     .review-pass { background: rgba(34, 197, 94, 0.2); color: #86efac; }
     .review-return { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
     .review-pending { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
-    .review-confirmed { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+    .review-confirmed { background: rgba(34, 197, 94, 0.2); color: #86efac; }
     .add-card-btn {
       padding: 10px;
       background: rgba(255, 255, 255, 0.04);
@@ -587,6 +605,72 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
+    /* Changelog Modal */
+    .changelog-modal {
+      max-width: 700px;
+    }
+    .changelog-version {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .changelog-version:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .changelog-version-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .changelog-version-tag {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .changelog-version-date {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+    .changelog-version-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .changelog-list {
+      list-style: none;
+      padding: 0;
+    }
+    .changelog-list li {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    .changelog-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #667eea;
+    }
+    .changelog-tag {
+      display: inline-block;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .changelog-tag.new { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+    .changelog-tag.fix { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .changelog-tag.improve { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+
     .status-toast {
       position: fixed;
       bottom: 20px;
@@ -631,6 +715,7 @@
       </select>
     </div>
     <div class="header-actions">
+      <div class="version-badge" onclick="openChangelogModal()" title="查看更新日誌">v1.1.0</div>
       <div class="sync-status synced" id="syncStatus">
         <div class="sync-indicator"></div>
         <span id="syncText">已同步</span>
@@ -650,6 +735,20 @@
   </div>
 
   <div class="board" id="board"></div>
+
+  <!-- Changelog Modal -->
+  <div class="modal-overlay" id="changelogModal">
+    <div class="modal changelog-modal">
+      <div class="modal-header">
+        <h2>📜 更新日誌</h2>
+        <button class="modal-close" onclick="closeChangelogModal()">✕</button>
+      </div>
+      <div id="changelogContent"></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeChangelogModal()">關閉</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Detail Modal -->
   <div class="modal-overlay" id="detailModal">
@@ -893,6 +992,58 @@
   <div class="status-toast" id="toast">已儲存</div>
 
   <script>
+    // ===== 版本與更新日誌 =====
+    const APP_VERSION = '1.1.0';
+    const CHANGELOG = [
+      {
+        version: '1.1.0',
+        date: '2026-02-03',
+        title: '系統級升級：版本日誌與狀態修復',
+        changes: [
+          { type: 'new', text: '新增版本日誌系統，右上角可查看更新紀錄' },
+          { type: 'fix', text: '修復離線模式誤判問題：精確區分「離線」與「連線失敗」' },
+          { type: 'fix', text: '修復卡片狀態標籤邏輯：confirmed 正確顯示「✓ 已確認」' },
+          { type: 'improve', text: '同步狀態 UI 優化，新增離線專用樣式' }
+        ]
+      },
+      {
+        version: '1.0.0',
+        date: '2026-02-02',
+        title: '正式發布：Kanban Sync 系統',
+        changes: [
+          { type: 'new', text: '6 欄位可回流式看板 (Backlog → Done)' },
+          { type: 'new', text: 'OneDrive 雲端同步與 ETag 衝突檢測' },
+          { type: 'new', text: '拖拉式卡片移動與 Review 驗收流程' },
+          { type: 'new', text: 'Markdown 渲染支援' },
+          { type: 'new', text: '專案管理與篩選功能' },
+          { type: 'new', text: '查看詳情 Modal（描述 / 看法 / 動作 / Notes）' }
+        ]
+      }
+    ];
+
+    function openChangelogModal() {
+      const container = document.getElementById('changelogContent');
+      container.innerHTML = CHANGELOG.map(ver => `
+        <div class="changelog-version">
+          <div class="changelog-version-header">
+            <span class="changelog-version-tag">v${ver.version}</span>
+            <span class="changelog-version-date">${ver.date}</span>
+          </div>
+          <div class="changelog-version-title">${ver.title}</div>
+          <ul class="changelog-list">
+            ${ver.changes.map(c => `
+              <li><span class="changelog-tag ${c.type}">${c.type}</span>${escapeHtml(c.text)}</li>
+            `).join('')}
+          </ul>
+        </div>
+      `).join('');
+      document.getElementById('changelogModal').classList.add('active');
+    }
+
+    function closeChangelogModal() {
+      document.getElementById('changelogModal').classList.remove('active');
+    }
+
     // API 基礎路徑
     const API_BASE = '/api';
 
@@ -943,7 +1094,12 @@
       setSyncStatus('syncing', '載入中...');
       try {
         const response = await fetch(`${API_BASE}/board`);
-        if (!response.ok) throw new Error('Failed to load');
+        
+        if (!response.ok) {
+          // API 回傳錯誤，嘗試解析錯誤訊息
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error || `HTTP ${response.status}`);
+        }
         
         const result = await response.json();
         boardData = result.data;
@@ -955,6 +1111,7 @@
         setSyncStatus('synced', '已同步');
       } catch (e) {
         console.error('Load error:', e);
+        
         // Fallback to localStorage
         const saved = localStorage.getItem('kanbanData');
         if (saved) {
@@ -963,12 +1120,22 @@
         }
         updateProjectList();
         render();
-        setSyncStatus('error', '離線模式');
-        fetch('/api/logs', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'load_error', error: e.message })
-        }).catch(() => {});
+        
+        // 精確判斷離線狀態
+        if (!navigator.onLine) {
+          setSyncStatus('offline', '離線模式');
+        } else {
+          setSyncStatus('error', '連線失敗');
+        }
+        
+        // 回報錯誤到後端（如果可以連線）
+        if (navigator.onLine) {
+          fetch('/api/logs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'load_error', error: e.message })
+          }).catch(() => {});
+        }
       }
     }
 
@@ -1009,7 +1176,13 @@
         showToast('已儲存 ✓');
       } catch (e) {
         console.error('Save error:', e);
-        setSyncStatus('error', '離線模式');
+        
+        // 精確判斷離線狀態
+        if (!navigator.onLine) {
+          setSyncStatus('offline', '離線模式');
+        } else {
+          setSyncStatus('error', '儲存失敗');
+        }
         showToast('已存到本機 (離線)', false);
       }
     }
@@ -1230,10 +1403,11 @@
       
       let reviewBadge = '';
       if (card.reviewResult) {
+        // P1-3: 正確的狀態標籤邏輯
         const badgeConfig = {
           'pass': { class: 'review-pass', text: '✓ 完成' },
-          'pending': { class: 'review-pending', text: '⏳ 處理中' },
           'confirmed': { class: 'review-confirmed', text: '✓ 已確認' },
+          'pending': { class: 'review-pending', text: '⏳ 處理中' },
           'revise': { class: 'review-return', text: '↩ 小修' },
           'rethink': { class: 'review-return', text: '↩ 重評' },
           'return': { class: 'review-return', text: '↩ 退回' }  // 舊資料相容
@@ -1703,7 +1877,18 @@
         closeProjectModal();
         closeConflictModal();
         closeDetailModal();
+        closeChangelogModal();
       }
+    });
+
+    // 監聽網路狀態變化
+    window.addEventListener('online', () => {
+      showToast('網路已恢復 ✓');
+      loadData();
+    });
+    window.addEventListener('offline', () => {
+      setSyncStatus('offline', '離線模式');
+      showToast('已進入離線模式', true);
     });
 
     // Init
