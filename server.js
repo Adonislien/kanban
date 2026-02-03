@@ -6,6 +6,7 @@ const path = require('path');
 
 const app = express();
 app.use(express.json({ limit: '50mb' }));
+app.use(express.static('.')); // 確保可以服務前端網頁
 
 const TOKEN_PATH = path.join(__dirname, 'token.json');
 const ONEDRIVE_PATH = '/Kanban/data.json';
