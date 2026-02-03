@@ -173,7 +173,7 @@
           "completedDate": "",
           "reviewResult": "pending",
           "reviewNotes": "## 🔌 插件亮點 (2026-02-03)\n- **網址**：https://github.com/quant-sentiment-ai/claude-equity-research\n- **最新更新**：2026-01-29\n- **功能**：專門為 AI Coding Agent (如 Claude Code) 設計的插件，能生成專業的研究報告。\n- **建議**：這正好可以整合進老大的 AI 助理系統中，強化我的股票分析能力！",
-          "userFeedback": null,
+          "bossOpinion": null,
           "color": "#8b5cf6",
           "createdAt": "2026-02-03T07:15:00.000Z"
         },
@@ -189,7 +189,7 @@
           "completedDate": "",
           "reviewResult": "pending",
           "reviewNotes": "## 📊 項目亮點 (2026-02-03)\n- **網址**：https://github.com/DaveSkender/Stock.Indicators\n- **最新更新**：今日 (2026-02-03)\n- **功能**：提供 C# 的完整技術指標（RSI, MACD, Bollinger Bands 等），非常適合建構高性能的桌面分析軟體。\n- **建議**：如果老大打算用 Wails (Go) 或其他框架整合 .NET 元件，這是一個非常穩定的後端指標計算源。",
-          "userFeedback": null,
+          "bossOpinion": null,
           "color": "#8b5cf6",
           "createdAt": "2026-02-03T07:15:00.000Z"
         },
