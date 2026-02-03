@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json({ limit: '50mb' }));
-app.use(express.static(path.join(__dirname, '.')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const TOKEN_PATH = path.join(__dirname, 'token.json');
 const ONEDRIVE_PATH = '/Kanban/data.json';
@@ -97,7 +97,7 @@ app.get('/api/board', async (req, res) => {
         const downloadRes = await axios.get(response.data['@microsoft.graph.downloadUrl']);
         res.json({
             etag: response.data['@odata.etag'],
-            ...downloadRes.data
+            data: downloadRes.data
         });
     } catch (error) {
         console.error('API Error (GET /api/board):', error.message);
@@ -109,11 +109,16 @@ app.put('/api/board', async (req, res) => {
     try {
         const token = await getAccessToken();
         console.log('正在將資料存入 OneDrive...');
-        const response = await axios.put(`https://graph.microsoft.com/v1.0/me/drive/root:${ONEDRIVE_PATH}:/content`, req.body, {
+        
+        // 優先從 body 抓取，其次從 Header 抓取
+        const content = req.body.data || req.body;
+        const etag = req.body.etag || req.headers['if-match'];
+
+        const response = await axios.put(`https://graph.microsoft.com/v1.0/me/drive/root:${ONEDRIVE_PATH}:/content`, content, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                'If-Match': req.headers['if-match']
+                'If-Match': etag
             }
         });
         res.json({ etag: response.data['@odata.etag'] });
@@ -130,7 +135,7 @@ app.put('/api/board', async (req, res) => {
 // 攔截所有路徑導向 index.html (SPA 支援)
 app.get('*', (req, res) => {
     if (req.path.startsWith('/api')) return; // 不要攔截 API
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
