@@ -4,38 +4,7 @@
       "id": "backlog",
       "title": "📦 Backlog",
       "description": "需求池 / 想法池",
-      "cards": [
-        {
-          "id": "1769974052837",
-          "project": "分析書本知識讓AI利用書本知識分析",
-          "title": "讓本地AI模型更有智慧",
-          "description": "利用 anythingllm 資料庫來存放各種知識並分類，讓本地AI模型可以實際應用這些知識進行分析",
-          "priority": "medium",
-          "assignee": "",
-          "createdDate": "2026-02-01",
-          "dueDate": "",
-          "completedDate": "",
-          "reviewResult": null,
-          "reviewNotes": null,
-          "color": "#6366f1",
-          "createdAt": "2026-02-01T19:27:32.837Z"
-        },
-        {
-          "id": "1769974232033",
-          "project": "學習使用vibe coding",
-          "title": "利用 vibe coding 來製作分析大數據或股票的 app，或是其他實用 App（例如 Kanban）",
-          "description": "可至 GitHub 搜尋相關資料，放入 Review 欄位後再討論可行性",
-          "priority": "medium",
-          "assignee": "",
-          "createdDate": "2026-02-01",
-          "dueDate": "",
-          "completedDate": "",
-          "reviewResult": null,
-          "reviewNotes": null,
-          "color": "#8b5cf6",
-          "createdAt": "2026-02-01T19:30:32.033Z"
-        }
-      ]
+      "cards": []
     },
     {
       "id": "todo",
@@ -61,6 +30,38 @@
       "description": "驗收",
       "cards": [
         {
+          "id": "1769974052837",
+          "project": "分析書本知識讓AI利用書本知識分析",
+          "title": "讓本地AI模型更有智慧",
+          "description": "利用 anythingllm 資料庫來存放各種知識並分類，讓本地AI模型可以實際應用這些知識進行分析",
+          "priority": "medium",
+          "assignee": "Jiscoo",
+          "createdDate": "2026-02-01",
+          "dueDate": "",
+          "completedDate": "",
+          "reviewResult": "pending",
+          "reviewNotes": "## 🚀 Jiscoo 的進階研究建議 (2026-02-03)\n\n除了老大提到的 AnythingLLM，我另外發現了幾個能大幅提升「智慧感」的方案：\n\n**1️⃣ Microsoft GraphRAG (⭐ 20k+)**\n- **特點：** 不只是搜尋片段，而是建立「知識圖譜」。\n- **優勢：** 適合處理像「這本書的核心思想是什麼？」這種全局性問題，而非傳統 RAG 只能回答局部問題。\n\n**2️⃣ RagFlow**\n- **特點：** 強大的文檔解析（OCR）。\n- **優勢：** 如果書本中有大量圖表、公式，這個工具能比一般工具解析得更精準。\n\n**3️⃣ Mem0 (AI 記憶層)**\n- **特點：** 記錄用戶偏好。\n- **優勢：** 讓 AI 記住老大的分析習慣，越用越聰明。\n\n**結論：** 建議先從 AnythingLLM 入手，但若書本量極大且關係複雜，可考慮研究 GraphRAG。",
+          "userFeedback": null,
+          "color": "#6366f1",
+          "createdAt": "2026-02-01T19:27:32.837Z"
+        },
+        {
+          "id": "1769974232033",
+          "project": "學習使用vibe coding",
+          "title": "利用 vibe coding 來製作分析大數據或股票的 app",
+          "description": "可至 GitHub 搜尋相關資料，放入 Review 欄位後再討論可行性",
+          "priority": "medium",
+          "assignee": "Jiscoo",
+          "createdDate": "2026-02-01",
+          "dueDate": "",
+          "completedDate": "",
+          "reviewResult": "pending",
+          "reviewNotes": "## 🎨 Vibe Coding 實戰資源 (2026-02-03)\n\n我為老大整理了目前最適合入門的 Vibe Coding 資源：\n\n**1️⃣ 魚皮 AI 資源大全 (liyupi/ai-guide)**\n- 有非常詳細的 Vibe Coding 零基礎教程，且是中文資源。\n- 推薦學習路徑：Cursor -> Trae -> Agent Skills。\n\n**2️⃣ VibeVibe 系統教程 (www.vibevibe.cn)**\n- 國內首個系統化 Vibe Coding 開源教程，從零到全棧。\n\n**3️⃣ Cherry Studio**\n- 這是一個基於 Vibe Coding 風格開發的開源桌面 App，老大可以 fork 它來學習如何建構多 Agent 協作的介面。\n\n**建議：** 老大可以先嘗試用 Cursor 搭配 GitHub 上的 `go-stock`（之前提到的方案）進行修改，這就是最快實踐 Vibe Coding 的方式！",
+          "userFeedback": null,
+          "color": "#8b5cf6",
+          "createdAt": "2026-02-01T19:30:32.033Z"
+        },
+        {
           "id": "review_kb_001",
           "project": "分析書本知識讓AI利用書本知識分析",
           "title": "【研究報告】本地AI知識庫方案調查",
@@ -71,7 +72,8 @@
           "dueDate": "",
           "completedDate": "",
           "reviewResult": null,
-          "reviewNotes": "## 🏆 推薦方案：AnythingLLM\n\n**1️⃣ 為什麼選這個：**\n- ⭐ 54,000+ Stars，最成熟的本地知識庫方案\n- 支援 Desktop + Docker，安裝簡單\n- 內建 RAG、AI Agents、No-code builder\n- 支援 Ollama、LMStudio 等本地 LLM\n- 有 MCP 相容性，可擴展\n\n**2️⃣ 網址：**\nhttps://github.com/Mintplex-Labs/anything-llm\n\n**3️⃣ 可行性分析：**\n✅ 完整的文件上傳和向量化功能\n✅ 支援 PDF、Word、網頁等多種格式\n✅ 可分類管理 Workspace\n✅ MIT 授權，免費使用\n✅ 活躍開發中（2026 年仍在更新）\n⚠️ 需要一定硬體資源運行本地 LLM\n\n**結論：老大之前提的 AnythingLLM 就是最佳選擇！建議直接採用。**\n\n---\n\n## 備選方案\n\n**Nous（8 ⭐）**\nhttps://github.com/ramchaik/nous\n- 隱私優先的個人知識助手\n- 使用 Ollama + LangGraph + FAISS\n\n**Local_RAG_KB（4 ⭐）**\nhttps://github.com/vinodkvijayan/Local_RAG_KB\n- Jupyter Notebook 教學專案\n- 使用 LlamaIndex + ChromaDB",
+          "reviewNotes": "## 🏆 推薦方案：AnythingLLM\n\n**1️⃣ 為什麼選這個：**\n- ⭐ 54,000+ Stars，最成熟的本地知識庫方案\n- 支援 Desktop + Docker，安裝簡單\n- 內建 RAG、AI Agents、No-code builder\n- 支援 Ollama、LMStudio 等本地 LLM\n- 有 MCP 相容性，可擴展\n\n**2️⃣ 網址：**\nhttps://github.com/Mintplex-Labs/anything-llm\n\n**3️⃣ 可行性分析：**\n✅ 完整的文件上傳和向量化功能\n✅ 支援 PDF、Word、網頁等多種格式\n✅ 可分類管理 Workspace\n✅ MIT 授權，免費使用\n✅ 活躍開發中（2026 年仍在更新）\n⚠️ 需要一定硬體資源運行本地 LLM\n\n**結論：老大之前提的 AnythingLLM 就是最佳選擇！建議直接採用。**",
+          "userFeedback": null,
           "color": "#6366f1",
           "createdAt": "2026-02-01T19:45:00.000Z"
         },
@@ -86,7 +88,8 @@
           "dueDate": "",
           "completedDate": "",
           "reviewResult": null,
-          "reviewNotes": "## 🏆 超推薦方案：go-stock\n\n**1️⃣ 為什麼選這個：**\n- ⭐ 4,200+ Stars，專為股票分析設計\n- 🎯 AI 賦能股票分析，正好符合老大研究股票的興趣！\n- 支援 A股、港股、美股\n- 已整合 AnythingLLM + DeepSeek + Ollama\n- 有桌面 App（Windows + MacOS）\n- 技術棧：Go + Wails + NaiveUI (Vibe Coding 風格)\n\n**2️⃣ 網址：**\nhttps://github.com/ArvinLovegood/go-stock\n\n**3️⃣ 可行性分析：**\n✅ 可直接下載使用\n✅ AI 熱點資訊分析\n✅ K線技術指標分析\n✅ AI 智能選股\n✅ 數據全部保留在本地\n✅ 支援自訂 AI 提問模板\n✅ Apache 2.0 授權，免費使用\n✅ 持續活躍更新（2025-2026）\n⚠️ 主要基於 Windows 開發\n\n**結論：建議直接試用 go-stock，同時可 fork 學習 Vibe Coding！**\n\n---\n\n## 其他股票分析方案\n\n**AI-Kline（293 ⭐）**\nhttps://github.com/QuantML-C/AI-Kline\n- Python 股票分析工具\n- K線圖 + 技術指標 + 財務數據 + 新聞\n- 支援 CMD/WEB/MCP\n\n**Real-time_stock_analysis（63 ⭐）**\nhttps://github.com/666zyb/Real-time_stock_analysis\n- Django Web 框架\n- 即時數據 + 情感分析 + 凱利公式\n- 自動化交易決策\n\n**TickrAgent（53 ⭐）**\nhttps://github.com/The-Swarm-Corporation/TickrAgent\n- 企業級 Python 庫\n- 多 Agent 協作分析\n\n---\n\n## 💡 Vibe Coding 學習建議\n\n老大可以用 go-stock 作為參考範例：\n1. 學習 Wails 框架（Go + Web 前端）\n2. 觀察如何整合 AI 模型\n3. 理解股票數據抓取邏輯\n4. 嘗試 fork 後客製化功能",
+          "reviewNotes": "## 🏆 超推薦方案：go-stock\n\n**1️⃣ 為什麼選這個：**\n- ⭐ 4,200+ Stars，專為股票分析設計\n- 🎯 AI 賦能股票分析，正好符合老大研究股票的興趣！\n- 支援 A股、港股、美股\n- 已整合 AnythingLLM + DeepSeek + Ollama\n- 有桌面 App（Windows + MacOS）\n- 技術棧：Go + Wails + NaiveUI (Vibe Coding 風格)\n\n**2️⃣ 網址：**\nhttps://github.com/ArvinLovegood/go-stock\n\n**3️⃣ 可行性分析：**\n✅ 可直接下載使用\n✅ AI 熱點資訊分析\n✅ K線技術指標分析\n✅ AI 智能選股\n✅ 數據全部保留在本地\n✅ 支援自訂 AI 提問模板\n✅ Apache 2.0 授權，免費使用\n✅ 持續活躍更新（2025-2026）\n⚠️ 主要基於 Windows 開發\n\n**結論：建議直接試用 go-stock，同時可 fork 學習 Vibe Coding！**",
+          "userFeedback": null,
           "color": "#8b5cf6",
           "createdAt": "2026-02-01T19:45:00.000Z"
         }
@@ -111,5 +114,5 @@
       "endDate": ""
     }
   ],
-  "lastUpdated": "2026-02-01T19:47:00.000Z"
+  "lastUpdated": "2026-02-03T07:00:00.000Z"
 }

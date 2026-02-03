@@ -339,7 +339,8 @@
     }
 
     .review-pass { background: rgba(34, 197, 94, 0.2); color: #86efac; }
-    .review-return { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
+    .review-return { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .review-pending { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
 
     .add-card-btn {
       padding: 10px;
@@ -1153,8 +1154,18 @@
       
       let reviewBadge = '';
       if (card.reviewResult) {
-        const isPass = card.reviewResult === 'pass';
-        reviewBadge = `<span class="review-badge ${isPass ? 'review-pass' : 'review-return'}">${isPass ? '✓ 通過' : '↩ 退回'}</span>`;
+        let badgeClass = 'review-return';
+        let badgeText = '↩ 退回';
+        
+        if (card.reviewResult === 'pass') {
+          badgeClass = 'review-pass';
+          badgeText = '✓ 通過';
+        } else if (card.reviewResult === 'pending') {
+          badgeClass = 'review-pending';
+          badgeText = '⏳ 處理中';
+        }
+        
+        reviewBadge = `<span class="review-badge ${badgeClass}">${badgeText}</span>`;
       }
 
       const isReviewColumn = columnId === 'review';
@@ -1227,8 +1238,11 @@
       const [card] = srcCol.cards.splice(cardIndex, 1);
 
       // Auto-set completed date when moving to Done
-      if (targetColumnId === 'done' && !card.completedDate) {
-        card.completedDate = new Date().toISOString().split('T')[0];
+      if (targetColumnId === 'done') {
+        if (!card.completedDate) {
+          card.completedDate = new Date().toISOString().split('T')[0];
+        }
+        card.reviewResult = 'pass';
       }
 
       // Clear review result when moving (except to done)
