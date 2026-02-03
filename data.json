@@ -30,6 +30,38 @@
       "description": "驗收",
       "cards": [
         {
+          "id": "research_stock_20260203_1",
+          "project": "學習使用vibe coding",
+          "title": "【研究報告】頂級 .NET 股票技術指標庫：Stock.Indicators",
+          "description": "DaveSkender/Stock.Indicators - 超過 100 種技術指標，支援 .NET 平台",
+          "priority": "medium",
+          "assignee": "Jiscoo",
+          "createdDate": "2026-02-03",
+          "dueDate": "",
+          "completedDate": "",
+          "reviewResult": "pending",
+          "reviewNotes": "## 📊 項目亮點 (2026-02-03)\n- **網址**：https://github.com/DaveSkender/Stock.Indicators\n- **最新更新**：今日 (2026-02-03)\n- **功能**：提供 C# 的完整技術指標（RSI, MACD, Bollinger Bands 等），非常適合建構高性能的桌面分析軟體。\n- **建議**：如果老大打算用 Wails (Go) 或其他框架整合 .NET 元件，這是一個非常穩定的後端指標計算源。",
+          "userFeedback": null,
+          "color": "#8b5cf6",
+          "createdAt": "2026-02-03T07:15:00.000Z"
+        },
+        {
+          "id": "research_stock_20260203_2",
+          "project": "學習使用vibe coding",
+          "title": "【研究報告】Claude Code 專用：機構級股權研究插件",
+          "description": "quant-sentiment-ai/claude-equity-research - 專業的買賣建議與風險評估",
+          "priority": "high",
+          "assignee": "Jiscoo",
+          "createdDate": "2026-02-03",
+          "dueDate": "",
+          "completedDate": "",
+          "reviewResult": "pending",
+          "reviewNotes": "## 🔌 插件亮點 (2026-02-03)\n- **網址**：https://github.com/quant-sentiment-ai/claude-equity-research\n- **最新更新**：2026-01-29\n- **功能**：專門為 AI Coding Agent (如 Claude Code) 設計的插件，能生成專業的研究報告。\n- **建議**：這正好可以整合進老大的 AI 助理系統中，強化我的股票分析能力！",
+          "userFeedback": null,
+          "color": "#8b5cf6",
+          "createdAt": "2026-02-03T07:15:00.000Z"
+        },
+        {
           "id": "1769974052837",
           "project": "分析書本知識讓AI利用書本知識分析",
           "title": "讓本地AI模型更有智慧",
@@ -114,5 +146,5 @@
       "endDate": ""
     }
   ],
-  "lastUpdated": "2026-02-03T07:00:00.000Z"
+  "lastUpdated": "2026-02-03T07:15:00.000Z"
 }
