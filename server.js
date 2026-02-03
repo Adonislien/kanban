@@ -33,46 +33,48 @@ async function getAccessToken() {
     return tokenData.access_token;
 }
 
-// 讀取檔案 (含 ETag 檢測)
-app.get('/api/data', async (req, res) => {
+// 讀取看板 (GET)
+app.get('/api/board', async (req, res) => {
     try {
         const token = await getAccessToken();
-        const response = await axios.get(`https://graph.microsoftonline.com/v1.0${ONEDRIVE_FILE_PATH}`, {
+        const response = await axios.get(`https://graph.microsoft.com/v1.0/me/drive/root:/Kanban/data.json`, {
             headers: { Authorization: `Bearer ${token}` }
         });
+
+        // 下載檔案內容
+        const downloadRes = await axios.get(response.data['@microsoft.graph.downloadUrl']);
         
         res.json({
             etag: response.data['@odata.etag'],
-            content: response.data // 假設這是一個下載連結或直接數據
+            ...downloadRes.data
         });
     } catch (error) {
-        res.status(500).send(error.message);
+        console.error('Fetch error:', error.message);
+        res.status(500).json({ error: error.message });
     }
 });
 
-// 寫入檔案 (處理 409 Conflict)
-app.post('/api/save', async (req, res) => {
-    const { content, etag } = req.body;
+// 儲存看板 (PUT)
+app.put('/api/board', async (req, res) => {
+    const content = req.body;
+    const etag = req.headers['if-match'];
     
     try {
         const token = await getAccessToken();
-        const response = await axios.put(`https://graph.microsoftonline.com/v1.0${ONEDRIVE_FILE_PATH}:/content`, content, {
+        const response = await axios.put(`https://graph.microsoft.com/v1.0/me/drive/root:/Kanban/data.json:/content`, content, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                'If-Match': etag // ETag 衝突檢測關鍵
+                'If-Match': etag
             }
         });
-        res.send('儲存成功');
+        res.json({ etag: response.data['@odata.etag'] });
     } catch (error) {
         if (error.response && error.response.status === 409) {
-            console.error('偵測到 409 Conflict: ETag 不匹配，有人在別端修改了檔案！');
-            res.status(409).json({
-                message: 'Conflict detected',
-                hint: '請先讀取最新版本並合併後再儲存'
-            });
+            res.status(409).json({ message: 'Conflict detected' });
         } else {
-            res.status(500).send(error.message);
+            console.error('Save error:', error.message);
+            res.status(500).json({ error: error.message });
         }
     }
 });
