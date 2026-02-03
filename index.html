@@ -8,6 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Markdown Parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // 全域錯誤捕捉並回傳後端
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+        fetch('/api/logs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'error', msg, url, lineNo, error: error?.message })
+        }).catch(() => {});
+        return false;
+    };
+  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -953,6 +964,11 @@
         updateProjectList();
         render();
         setSyncStatus('error', '離線模式');
+        fetch('/api/logs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'load_error', error: e.message })
+        }).catch(() => {});
       }
     }
 
